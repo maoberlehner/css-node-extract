@@ -10,6 +10,7 @@ const filterDefinitions = {
   ],
   mixins: [
     { type: `atrule`, property: { name: `name`, value: `mixin` } },
+    { type: `rule`, property: { name: `selector`, value: /\(.*\)/ } },
   ],
   rules: [
     { type: `rule` },
@@ -26,6 +27,7 @@ const filterDefinitions = {
     { type: `atrule`, property: { name: `name`, value: `warn` } },
     { type: `decl`, property: { name: `prop`, value: /^[$|@]/ } },
     { type: `rule`, property: { name: `selector`, value: /%/ } },
+    { type: `rule`, property: { name: `selector`, value: /\(.*\)/ } },
   ],
   variables: [
     { type: `decl`, property: { name: `prop`, value: /^[$|@]/ } },

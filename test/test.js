@@ -3,12 +3,14 @@ const CssFilterExtract = require(`../`);
 const expect = require(`chai`).expect;
 const fs = require(`fs`);
 const postcssScssSyntax = require(`postcss-scss`);
+const postcssLessSyntax = require(`postcss-less`);
 
 // const postcssFilterExtract = require(`../dist/lib/postcss-filter-extract.js`);
 
 /** @test {CssFilterExtract} */
 describe(`CssFilterExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
+  const less = fs.readFileSync(`test/css/test.less`, { encoding: `utf8` });
 
   it(`should be a function`, () => {
     expect(typeof CssFilterExtract).to.equal(`function`);
@@ -20,7 +22,7 @@ describe(`CssFilterExtract`, () => {
       expect(typeof CssFilterExtract.process).to.equal(`function`);
     });
 
-    it(`should extract only at-rules`, () => {
+    it(`SCSS: should extract only at-rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/at-rules.scss`, {
         encoding: `utf8`,
       });
@@ -32,7 +34,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only mixin at-rules and variable declarations`, () => {
+    it(`SCSS: should extract only mixin at-rules and variable declarations`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/combined.scss`, {
         encoding: `utf8`,
       });
@@ -44,7 +46,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only declaration rules`, () => {
+    it(`SCSS: should extract only declaration rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/declarations.scss`, {
         encoding: `utf8`,
       });
@@ -56,7 +58,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only mixin at-rules`, () => {
+    it(`SCSS: should extract only mixin at-rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/mixins.scss`, {
         encoding: `utf8`,
       });
@@ -68,7 +70,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only rules`, () => {
+    it(`SCSS: should extract only rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/rules.scss`, {
         encoding: `utf8`,
       });
@@ -80,7 +82,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only silent rules`, () => {
+    it(`SCSS: should extract only silent rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/silent.scss`, {
         encoding: `utf8`,
       });
@@ -92,7 +94,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only variable rules`, () => {
+    it(`SCSS: should extract only variable rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/variables.scss`, {
         encoding: `utf8`,
       });
@@ -104,7 +106,7 @@ describe(`CssFilterExtract`, () => {
         });
     });
 
-    it(`should extract only keyframes at-rules`, () => {
+    it(`SCSS: should extract only keyframes at-rules`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/keyframes.scss`, {
         encoding: `utf8`,
       });
@@ -112,6 +114,30 @@ describe(`CssFilterExtract`, () => {
       const customFilter = [{ type: `atrule`, property: { name: `name`, value: `keyframes` } }];
       const postcssSyntax = postcssScssSyntax;
       return CssFilterExtract.process({ css: scss, filterNames, customFilter, postcssSyntax })
+        .then((filteredScss) => {
+          expect(filteredScss.trim()).to.equal(referenceScss.trim());
+        });
+    });
+
+    it(`LESS: should extract only mixin rules`, () => {
+      const referenceScss = fs.readFileSync(`test/css/reference/mixins.less`, {
+        encoding: `utf8`,
+      });
+      const filterNames = `mixins`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: less, filterNames, postcssSyntax })
+        .then((filteredScss) => {
+          expect(filteredScss.trim()).to.equal(referenceScss.trim());
+        });
+    });
+
+    it(`LESS: should extract only silent rules`, () => {
+      const referenceScss = fs.readFileSync(`test/css/reference/silent.less`, {
+        encoding: `utf8`,
+      });
+      const filterNames = `silent`;
+      const postcssSyntax = postcssLessSyntax;
+      return CssFilterExtract.process({ css: less, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
