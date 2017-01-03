@@ -23,35 +23,36 @@ function filterRuleRecursive(rule, filter) {
   return false;
 }
 
+var filterDefinitions = {
+  'at-rules': [
+    { type: "atrule" } ],
+  declarations: [
+    { type: "decl" } ],
+  mixins: [
+    { type: "atrule", property: { name: "name", value: "mixin" } } ],
+  rules: [
+    { type: "rule" } ],
+  silent: [
+    { type: "atrule", property: { name: "name", value: "charset" } },
+    { type: "atrule", property: { name: "name", value: "debug" } },
+    { type: "atrule", property: { name: "name", value: "document" } },
+    { type: "atrule", property: { name: "name", value: "error" } },
+    { type: "atrule", property: { name: "name", value: "font-face" } },
+    { type: "atrule", property: { name: "name", value: "keyframes" } },
+    { type: "atrule", property: { name: "name", value: "mixin" } },
+    { type: "atrule", property: { name: "name", value: "namespace" } },
+    { type: "atrule", property: { name: "name", value: "warn" } },
+    { type: "decl", property: { name: "prop", value: /^[$|@]/ } },
+    { type: "rule", property: { name: "selector", value: /%/ } } ],
+  variables: [
+    { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
+};
+
 function postcssFilterExtract(filterNames, customFilter) {
   if ( filterNames === void 0 ) filterNames = [];
 
   var filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
-  var filterDefinitions = {
-    'at-rules': [
-      { type: "atrule" } ],
-    declarations: [
-      { type: "decl" } ],
-    mixins: [
-      { type: "atrule", property: { name: "name", value: "mixin" } } ],
-    rules: [
-      { type: "rule" } ],
-    silent: [
-      { type: "atrule", property: { name: "name", value: "charset" } },
-      { type: "atrule", property: { name: "name", value: "debug" } },
-      { type: "atrule", property: { name: "name", value: "document" } },
-      { type: "atrule", property: { name: "name", value: "error" } },
-      { type: "atrule", property: { name: "name", value: "font-face" } },
-      { type: "atrule", property: { name: "name", value: "keyframes" } },
-      { type: "atrule", property: { name: "name", value: "mixin" } },
-      { type: "atrule", property: { name: "name", value: "namespace" } },
-      { type: "atrule", property: { name: "name", value: "warn" } },
-      { type: "decl", property: { name: "prop", value: /^[$|@]/ } },
-      { type: "rule", property: { name: "selector", value: /%/ } } ],
-    variables: [
-      { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
-    custom: customFilter,
-  };
+  filterDefinitions.custom = customFilter;
 
   return postcss.plugin("postcss-filter-extract", function () { return function (nodes) {
     nodes.walk(function (rule) {
@@ -68,25 +69,33 @@ function postcssFilterExtract(filterNames, customFilter) {
   }; });
 }
 
+var defaultOptions = {
+  css: "",
+  filterNames: [],
+  customFilter: undefined,
+  postcssSyntax: undefined,
+};
+
 /**
  * CssFilterExtract
  */
 var CssFilterExtract = function CssFilterExtract () {};
 
-CssFilterExtract.process = function process (css, filterNames, customFilter) {
+CssFilterExtract.process = function process (options) {
+    if ( options === void 0 ) options = {};
+
   return new Promise(function (resolve) {
-    var result = CssFilterExtract.processSync(
-      css,
-      filterNames,
-      customFilter
-    );
+    var result = CssFilterExtract.processSync(options);
     resolve(result);
   });
 };
 
-CssFilterExtract.processSync = function processSync (css, filterNames, customFilter) {
-  return postcss(postcssFilterExtract(filterNames, customFilter))
-    .process(css).css;
+CssFilterExtract.processSync = function processSync (options) {
+    if ( options === void 0 ) options = {};
+
+  var data = Object.assign({}, defaultOptions, options);
+  return postcss(postcssFilterExtract(data.filterNames, data.customFilter))
+    .process(data.css, { syntax: data.postcssSyntax }).css;
 };
 
 module.exports = CssFilterExtract;

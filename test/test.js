@@ -2,7 +2,7 @@
 const CssFilterExtract = require(`../`);
 const expect = require(`chai`).expect;
 const fs = require(`fs`);
-// const postcssScssSyntax = require(`postcss-scss`);
+const postcssScssSyntax = require(`postcss-scss`);
 
 // const postcssFilterExtract = require(`../dist/lib/postcss-filter-extract.js`);
 
@@ -24,8 +24,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/at-rules.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `at-rules`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `at-rules`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -36,7 +37,8 @@ describe(`CssFilterExtract`, () => {
         encoding: `utf8`,
       });
       const filterNames = [`mixins`, `variables`];
-      return CssFilterExtract.process(scss, filterNames)
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -46,8 +48,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/declarations.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `declarations`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `declarations`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -57,8 +60,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/mixins.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `mixins`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `mixins`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -68,8 +72,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/rules.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `rules`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `rules`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -79,8 +84,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/silent.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `silent`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `silent`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -90,8 +96,9 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/variables.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `variables`;
-      return CssFilterExtract.process(scss, filterName)
+      const filterNames = `variables`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
@@ -101,9 +108,10 @@ describe(`CssFilterExtract`, () => {
       const referenceScss = fs.readFileSync(`test/css/reference/keyframes.scss`, {
         encoding: `utf8`,
       });
-      const filterName = `custom`;
+      const filterNames = `custom`;
       const customFilter = [{ type: `atrule`, property: { name: `name`, value: `keyframes` } }];
-      return CssFilterExtract.process(scss, filterName, customFilter)
+      const postcssSyntax = postcssScssSyntax;
+      return CssFilterExtract.process({ css: scss, filterNames, customFilter, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(referenceScss.trim());
         });
