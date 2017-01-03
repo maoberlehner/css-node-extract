@@ -1,0 +1,57 @@
+.class-selector {
+  content: 'Class selector';
+}
+
+#id-selector {
+  content: 'Id selector';
+}
+
+%placeholder-selector {
+  content: 'Placeholder selector';
+}
+
+.nested {
+  .selector {
+    content: 'Nested selector';
+  }
+}
+
+.media-at-rule-inside-selector {
+  @media (min-width: 30em) {
+    content: 'Media at rule inside selector';
+  }
+}
+
+.supports-at-rule-inside-selector {
+  @supports (transition: all) {
+    content: 'Supports at rule inside selector';
+  }
+}
+
+.extend-at-rule-inside-selector {
+  @extend .selector;
+}
+
+.if-at-rule-inside-selector {
+  @if true {
+    content: 'If at rule inside selector';
+  }
+}
+
+.for-at-rule-inside-selector {
+  @for $i from 1 through 3 {
+    content: 'For at rule inside selector';
+  }
+}
+
+.each-at-rule-inside-selector {
+  @each $thing in $things {
+    content: 'Each at rule inside selector';
+  }
+}
+
+.while-at-rule-inside-selector {
+  @while $i > 0 {
+    content: 'While at rule inside selector';
+  }
+}
