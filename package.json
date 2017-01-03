@@ -1,6 +1,6 @@
 {
   "name": "css-filter-extract",
-  "description": "Run certain filters on (S)CSS code",
+  "description": "Run certain filters on (S)CSS / LESS code",
   "keywords": [
     "CSS"
   ],

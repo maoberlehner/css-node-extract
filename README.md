@@ -1,7 +1,7 @@
 # css-filter-extract
 [![Build Status](https://travis-ci.org/maoberlehner/css-filter-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-filter-extract)
 
-Run certain filters on (S)CSS code.
+Run certain filters on (S)CSS / LESS code.
 
 ## Demos
 
