@@ -1,24 +1,48 @@
 import postcss from 'postcss';
-
-import postcssFilterExtract from './lib/postcss-filter-extract';
+import postcssNodeExtract from './lib/postcss-node-extract';
 
 /**
- * CssFilterExtract
+ * Default options.
+ *
+ * @type {Object}
  */
-export default class CssFilterExtract {
-  static process(css, filterNames, customFilter) {
+const defaultOptions = {
+  css: ``,
+  filterNames: [],
+  customFilter: undefined,
+  postcssSyntax: undefined,
+};
+
+/**
+ * CssNodeExtract
+ */
+export default class CssNodeExtract {
+  /**
+   * Asynchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {Promise}
+   *   Promise for a string with the extracted nodes.
+   */
+  static process(options = {}) {
     return new Promise((resolve) => {
-      const result = CssFilterExtract.processSync(
-        css,
-        filterNames,
-        customFilter
-      );
+      const result = CssNodeExtract.processSync(options);
       resolve(result);
     });
   }
 
-  static processSync(css, filterNames, customFilter) {
-    return postcss(postcssFilterExtract(filterNames, customFilter))
-      .process(css).css;
+  /**
+   * Synchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {String}
+   *   Extracted nodes.
+   */
+  static processSync(options = {}) {
+    const data = Object.assign({}, defaultOptions, options);
+    return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
+      .process(data.css, { syntax: data.postcssSyntax }).css;
   }
 }

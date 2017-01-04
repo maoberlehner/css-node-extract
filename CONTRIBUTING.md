@@ -14,11 +14,11 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 1. To begin, [fork this project], clone your fork, and add our upstream.
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/css-filter-extract
+   git clone https://github.com/<your-username>/css-node-extract
    # Navigate to the newly cloned directory
-   cd css-filter-extract
+   cd css-node-extract
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/maoberlehner/css-filter-extract
+   git remote add upstream https://github.com/maoberlehner/css-node-extract
    # Install the tools necessary for development
    npm install
    ```
@@ -45,8 +45,8 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 4. Now [open a pull request] with a clear title and description.
 
-[already been reported]: https://github.com/maoberlehner/css-filter-extract/issues
-[fork this project]:     https://github.com/maoberlehner/css-filter-extract/fork
+[already been reported]: https://github.com/maoberlehner/css-node-extract/issues
+[fork this project]:     https://github.com/maoberlehner/css-node-extract/fork
 [live example]:          http://codepen.io/pen
 [open a pull request]:   https://help.github.com/articles/using-pull-requests/
 [reduced test case]:     https://css-tricks.com/reduced-test-cases/

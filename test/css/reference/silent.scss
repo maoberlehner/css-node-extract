@@ -1,16 +1,3 @@
-@charset 'UTF-8';
-@namespace url(http://www.w3.org/1999/xhtml);
-@document url(http://www.w3.org/);
-
-@font-face {
-  font-family: 'Font face at rule';
-}
-
-@keyframes keyframes-at-rule {
-  0% { content: 'Keyframes at rule 0%'; }
-  100% { content: 'Keyframes at rule 100%'; }
-}
-
 %placeholder-selector {
   content: 'Placeholder selector';
 }
@@ -19,7 +6,11 @@ $variable1: variable;
 $variable2: variable;
 $variable3: variable;
 
-@mixin mixin {
+@function function-at-rule() {
+  @return 'function at rule';
+}
+
+@mixin mixin-at-rule {
   .selector-inside-mixin-at-rule {
     content: 'Selector inside mixin at rule';
   }

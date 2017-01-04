@@ -1,0 +1,67 @@
+@charset 'UTF-8';
+@namespace url(http://www.w3.org/1999/xhtml);
+@document url(http://www.w3.org/);
+@import 'import-test.scss';
+
+@font-face {
+  font-family: 'Font face at rule';
+}
+
+@keyframes keyframes-at-rule {
+  0% { content: 'Keyframes at rule 0%'; }
+  100% { content: 'Keyframes at rule 100%'; }
+}
+
+@viewport {
+  orientation: landscape;
+}
+
+.class-selector {
+  content: 'Class selector';
+}
+
+#id-selector {
+  content: 'Id selector';
+}
+
+.nested {
+  .selector {
+    content: 'Nested selector';
+  }
+}
+
+@media (min-width: 30em) {
+  .selector-inside-media-at-rule {
+    content: 'Selector inside media at rule';
+  }
+}
+
+.media-at-rule-inside-selector {
+  @media (min-width: 30em) {
+    content: 'Media at rule inside selector';
+  }
+}
+
+@supports (transition: all) {
+  .selector-inside-supports-at-rule {
+    content: 'Selector inside supports at rule';
+  }
+}
+
+.supports-at-rule-inside-selector {
+  @supports (transition: all) {
+    content: 'Supports at rule inside selector';
+  }
+}
+
+@variable1: variable;
+@variable2: variable;
+@variable3: variable;
+
+.mixin-at-rule() {
+  .selector-inside-mixin-at-rule {
+    content: 'Selector inside mixin rule';
+  }
+}
+
+// Preprocessor comment test.

@@ -62,7 +62,11 @@ $variable1: variable;
 $variable2: variable;
 $variable3: variable;
 
-@mixin mixin {
+@function function-at-rule() {
+  @return 'function at rule';
+}
+
+@mixin mixin-at-rule {
   .selector-inside-mixin-at-rule {
     content: 'Selector inside mixin at rule';
   }
@@ -128,4 +132,4 @@ $variable3: variable;
 @warn 'Warn at rule';
 @error 'Error at rule';
 
-/*// Preprocessor comment test.*/
+// Preprocessor comment test.

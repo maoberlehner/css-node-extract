@@ -4,63 +4,125 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
-function filterRuleRecursive(rule, filter) {
-  if (rule.parent && rule.parent.type !== "root") { return filterRuleRecursive(rule.parent, filter); }
-
-  if (filter.type && filter.type !== rule.type) { return false; }
-  if (filter.property && !rule[filter.property.name]) { return false; }
-
-  if (filter.property) {
-    var ruleHasProperty = rule[filter.property.name] === filter.property.value ||
-      rule[filter.property.name].match(filter.property.value);
-    if (ruleHasProperty) {
-      return true;
-    }
-  } else if (filter.type && filter.type === rule.type) {
-    return true;
-  }
-
+/**
+ * Check if a node matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Object} filter
+ *   Filter object.
+ * @return {Boolean}
+ *   Returns true if the node matches the filter and false if not.
+ */
+function nodeMatchesFilter(node, filter) {
+  if (!node[filter.property]) { return false; }
+  if (node[filter.property] === filter.value) { return true; }
+  if (filter.value instanceof RegExp && filter.value.test(node[filter.property])) { return true; }
   return false;
 }
 
-function postcssFilterExtract(filterNames, customFilter) {
+/**
+ * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Array} filterGroups
+ *   Array of filter groups.
+ * @return {Boolean}
+ *   Returns true if the node (or one of its parents) matches one or more
+ *   filter groups and false if not.
+ */
+function extractNodeRecursively(node, filterGroups) {
+  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filterGroups); }
+
+  var extractNode = false;
+
+  filterGroups.some(function (groupOrFilter) {
+    var filterGroup = Array.isArray(groupOrFilter) ? groupOrFilter : [groupOrFilter];
+    extractNode = filterGroup.filter(
+      function (filter) { return !nodeMatchesFilter(node, filter); }
+    ).length === 0;
+    return extractNode;
+  });
+
+  return extractNode;
+}
+
+/**
+ * Filter definitions.
+ *
+ * @type {Object}
+ */
+var filterDefinitions = {
+  'at-rules': [
+    { property: "type", value: "atrule" } ],
+  declarations: [
+    { property: "type", value: "decl" } ],
+  functions: [
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "function" } ] ],
+  mixins: [
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "mixin" } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /\(.*\)/ } ] ],
+  rules: [
+    { property: "type", value: "rule" } ],
+  silent: [
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "debug" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "error" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "function" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "mixin" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "warn" } ],
+    [
+      { property: "type", value: "decl" },
+      { property: "prop", value: /^[$|@]/ } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /%/ } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /\(.*\)/ } ] ],
+  variables: [
+    [
+      { property: "type", value: "decl" },
+      { property: "prop", value: /^[$|@]/ } ] ],
+};
+
+/**
+ * A PostCSS plugin for extracting nodes from CSS code.
+ *
+ * @param {Array|String} filterNames
+ *   Multiple filter names as array or a single filter name as string.
+ * @param {Object} customFilter
+ *   Custom filter object.
+ * @return {Function}
+ *   PostCSS plugin.
+ */
+function postcssNodeExtract(filterNames, customFilter) {
   if ( filterNames === void 0 ) filterNames = [];
 
   var filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
-  var filterDefinitions = {
-    'at-rules': [
-      { type: "atrule" } ],
-    declarations: [
-      { type: "decl" } ],
-    mixins: [
-      { type: "atrule", property: { name: "name", value: "mixin" } } ],
-    rules: [
-      { type: "rule" } ],
-    silent: [
-      { type: "atrule", property: { name: "name", value: "charset" } },
-      { type: "atrule", property: { name: "name", value: "debug" } },
-      { type: "atrule", property: { name: "name", value: "document" } },
-      { type: "atrule", property: { name: "name", value: "error" } },
-      { type: "atrule", property: { name: "name", value: "font-face" } },
-      { type: "atrule", property: { name: "name", value: "keyframes" } },
-      { type: "atrule", property: { name: "name", value: "mixin" } },
-      { type: "atrule", property: { name: "name", value: "namespace" } },
-      { type: "atrule", property: { name: "name", value: "warn" } },
-      { type: "decl", property: { name: "prop", value: /^[$|@]/ } },
-      { type: "rule", property: { name: "selector", value: /%/ } } ],
-    variables: [
-      { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
-    custom: customFilter,
-  };
+  filterDefinitions.custom = customFilter;
 
-  return postcss.plugin("postcss-filter-extract", function () { return function (nodes) {
+  return postcss.plugin("postcss-node-extract", function () { return function (nodes) {
     nodes.walk(function (rule) {
       var filterRule = false;
       filterNamesArray.some(function (filterName) {
-        filterDefinitions[filterName].some(function (filter) {
-          filterRule = filterRuleRecursive(rule, filter);
-          return filterRule;
-        });
+        filterRule = extractNodeRecursively(rule, filterDefinitions[filterName]);
         return filterRule;
       });
       if (!filterRule) { rule.remove(); }
@@ -69,24 +131,45 @@ function postcssFilterExtract(filterNames, customFilter) {
 }
 
 /**
- * CssFilterExtract
+ * Default options.
+ *
+ * @type {Object}
  */
-var CssFilterExtract = function CssFilterExtract () {};
+var defaultOptions = {
+  css: "",
+  filterNames: [],
+  customFilter: undefined,
+  postcssSyntax: undefined,
+};
 
-CssFilterExtract.process = function process (css, filterNames, customFilter) {
+/**
+ * CssNodeExtract
+ */
+var CssNodeExtract = function CssNodeExtract () {};
+
+CssNodeExtract.process = function process (options) {
+    if ( options === void 0 ) options = {};
+
   return new Promise(function (resolve) {
-    var result = CssFilterExtract.processSync(
-      css,
-      filterNames,
-      customFilter
-    );
+    var result = CssNodeExtract.processSync(options);
     resolve(result);
   });
 };
 
-CssFilterExtract.processSync = function processSync (css, filterNames, customFilter) {
-  return postcss(postcssFilterExtract(filterNames, customFilter))
-    .process(css).css;
+/**
+ * Synchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ * Configuration options.
+ * @return {String}
+ * Extracted nodes.
+ */
+CssNodeExtract.processSync = function processSync (options) {
+    if ( options === void 0 ) options = {};
+
+  var data = Object.assign({}, defaultOptions, options);
+  return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
+    .process(data.css, { syntax: data.postcssSyntax }).css;
 };
 
-module.exports = CssFilterExtract;
+module.exports = CssNodeExtract;

@@ -1,4 +1,4 @@
-@mixin mixin {
+@mixin mixin-at-rule {
   .selector-inside-mixin-at-rule {
     content: 'Selector inside mixin at rule';
   }
