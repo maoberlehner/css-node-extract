@@ -48,8 +48,8 @@ var options = {
   customFilter: [
     [
       { property: 'type', value: 'atrule' },
-      { property: 'name', value: 'keyframes' },
-    ],
+      { property: 'name', value: 'keyframes' }
+    ]
   ]
 };
 
