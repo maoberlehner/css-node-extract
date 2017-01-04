@@ -1,42 +1,6 @@
 import postcss from 'postcss';
 import extractNodeRecursively from './extract-node-recursively';
-
-/**
- * Filter definitions.
- *
- * @type {Object}
- */
-const filterDefinitions = {
-  'at-rules': [
-    { type: `atrule` },
-  ],
-  declarations: [
-    { type: `decl` },
-  ],
-  functions: [
-    { type: `atrule`, property: { name: `name`, value: `function` } },
-  ],
-  mixins: [
-    { type: `atrule`, property: { name: `name`, value: `mixin` } },
-    { type: `rule`, property: { name: `selector`, value: /\(.*\)/ } },
-  ],
-  rules: [
-    { type: `rule` },
-  ],
-  silent: [
-    { type: `atrule`, property: { name: `name`, value: `debug` } },
-    { type: `atrule`, property: { name: `name`, value: `error` } },
-    { type: `atrule`, property: { name: `name`, value: `function` } },
-    { type: `atrule`, property: { name: `name`, value: `mixin` } },
-    { type: `atrule`, property: { name: `name`, value: `warn` } },
-    { type: `decl`, property: { name: `prop`, value: /^[$|@]/ } },
-    { type: `rule`, property: { name: `selector`, value: /%/ } },
-    { type: `rule`, property: { name: `selector`, value: /\(.*\)/ } },
-  ],
-  variables: [
-    { type: `decl`, property: { name: `prop`, value: /^[$|@]/ } },
-  ],
-};
+import filterDefinitions from './filter-definitions';
 
 /**
  * A PostCSS plugin for extracting nodes from CSS code.
@@ -56,10 +20,7 @@ export default function postcssNodeExtract(filterNames = [], customFilter) {
     nodes.walk((rule) => {
       let filterRule = false;
       filterNamesArray.some((filterName) => {
-        filterDefinitions[filterName].some((filter) => {
-          filterRule = extractNodeRecursively(rule, filter);
-          return filterRule;
-        });
+        filterRule = extractNodeRecursively(rule, filterDefinitions[filterName]);
         return filterRule;
       });
       if (!filterRule) rule.remove();

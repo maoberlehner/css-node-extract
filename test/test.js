@@ -123,7 +123,12 @@ describe(`CssNodeExtract`, () => {
         encoding: `utf8`,
       });
       const filterNames = `custom`;
-      const customFilter = [{ type: `atrule`, property: { name: `name`, value: `keyframes` } }];
+      const customFilter = [
+        [
+          { property: `type`, value: `atrule` },
+          { property: `name`, value: `keyframes` },
+        ],
+      ];
       const postcssSyntax = postcssScssSyntax;
       return CssNodeExtract.process({ css: scss, filterNames, customFilter, postcssSyntax })
         .then((filteredScss) => {

@@ -1,32 +1,47 @@
 'use strict';
 
 /**
- * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ * Check if a node matches the given filter.
  *
  * @param {Object} node
  *   A postcss node object.
  * @param {Object} filter
  *   Filter object.
  * @return {Boolean}
- *   Returns true if the node (or one of its parents) matches the filter and false if not.
+ *   Returns true if the node matches the filter and false if not.
  */
-function extractNodeRecursively(node, filter) {
-  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filter); }
-
-  if (filter.type && filter.type !== node.type) { return false; }
-  if (filter.property && !node[filter.property.name]) { return false; }
-
-  if (filter.property) {
-    var ruleHasProperty = node[filter.property.name] === filter.property.value ||
-      node[filter.property.name].match(filter.property.value);
-    if (ruleHasProperty) {
-      return true;
-    }
-  } else if (filter.type && filter.type === node.type) {
-    return true;
-  }
-
+function nodeMatchesFilter(node, filter) {
+  if (!node[filter.property]) { return false; }
+  if (node[filter.property] === filter.value) { return true; }
+  if (filter.value instanceof RegExp && filter.value.test(node[filter.property])) { return true; }
   return false;
+}
+
+/**
+ * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Array} filterGroups
+ *   Array of filter groups.
+ * @return {Boolean}
+ *   Returns true if the node (or one of its parents) matches one or more
+ *   filter groups and false if not.
+ */
+function extractNodeRecursively(node, filterGroups) {
+  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filterGroups); }
+
+  var extractNode = false;
+
+  filterGroups.some(function (groupOrFilter) {
+    var filterGroup = Array.isArray(groupOrFilter) ? groupOrFilter : [groupOrFilter];
+    extractNode = filterGroup.filter(
+      function (filter) { return !nodeMatchesFilter(node, filter); }
+    ).length === 0;
+    return extractNode;
+  });
+
+  return extractNode;
 }
 
 module.exports = extractNodeRecursively;

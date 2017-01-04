@@ -5,32 +5,47 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var postcss = _interopDefault(require('postcss'));
 
 /**
- * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ * Check if a node matches the given filter.
  *
  * @param {Object} node
  *   A postcss node object.
  * @param {Object} filter
  *   Filter object.
  * @return {Boolean}
- *   Returns true if the node (or one of its parents) matches the filter and false if not.
+ *   Returns true if the node matches the filter and false if not.
  */
-function extractNodeRecursively(node, filter) {
-  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filter); }
-
-  if (filter.type && filter.type !== node.type) { return false; }
-  if (filter.property && !node[filter.property.name]) { return false; }
-
-  if (filter.property) {
-    var ruleHasProperty = node[filter.property.name] === filter.property.value ||
-      node[filter.property.name].match(filter.property.value);
-    if (ruleHasProperty) {
-      return true;
-    }
-  } else if (filter.type && filter.type === node.type) {
-    return true;
-  }
-
+function nodeMatchesFilter(node, filter) {
+  if (!node[filter.property]) { return false; }
+  if (node[filter.property] === filter.value) { return true; }
+  if (filter.value instanceof RegExp && filter.value.test(node[filter.property])) { return true; }
   return false;
+}
+
+/**
+ * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Array} filterGroups
+ *   Array of filter groups.
+ * @return {Boolean}
+ *   Returns true if the node (or one of its parents) matches one or more
+ *   filter groups and false if not.
+ */
+function extractNodeRecursively(node, filterGroups) {
+  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filterGroups); }
+
+  var extractNode = false;
+
+  filterGroups.some(function (groupOrFilter) {
+    var filterGroup = Array.isArray(groupOrFilter) ? groupOrFilter : [groupOrFilter];
+    extractNode = filterGroup.filter(
+      function (filter) { return !nodeMatchesFilter(node, filter); }
+    ).length === 0;
+    return extractNode;
+  });
+
+  return extractNode;
 }
 
 /**
@@ -40,27 +55,51 @@ function extractNodeRecursively(node, filter) {
  */
 var filterDefinitions = {
   'at-rules': [
-    { type: "atrule" } ],
+    { property: "type", value: "atrule" } ],
   declarations: [
-    { type: "decl" } ],
+    { property: "type", value: "decl" } ],
   functions: [
-    { type: "atrule", property: { name: "name", value: "function" } } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "function" } ] ],
   mixins: [
-    { type: "atrule", property: { name: "name", value: "mixin" } },
-    { type: "rule", property: { name: "selector", value: /\(.*\)/ } } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "mixin" } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /\(.*\)/ } ] ],
   rules: [
-    { type: "rule" } ],
+    { property: "type", value: "rule" } ],
   silent: [
-    { type: "atrule", property: { name: "name", value: "debug" } },
-    { type: "atrule", property: { name: "name", value: "error" } },
-    { type: "atrule", property: { name: "name", value: "function" } },
-    { type: "atrule", property: { name: "name", value: "mixin" } },
-    { type: "atrule", property: { name: "name", value: "warn" } },
-    { type: "decl", property: { name: "prop", value: /^[$|@]/ } },
-    { type: "rule", property: { name: "selector", value: /%/ } },
-    { type: "rule", property: { name: "selector", value: /\(.*\)/ } } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "debug" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "error" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "function" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "mixin" } ],
+    [
+      { property: "type", value: "atrule" },
+      { property: "name", value: "warn" } ],
+    [
+      { property: "type", value: "decl" },
+      { property: "prop", value: /^[$|@]/ } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /%/ } ],
+    [
+      { property: "type", value: "rule" },
+      { property: "selector", value: /\(.*\)/ } ] ],
   variables: [
-    { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
+    [
+      { property: "type", value: "decl" },
+      { property: "prop", value: /^[$|@]/ } ] ],
 };
 
 /**
@@ -83,10 +122,7 @@ function postcssNodeExtract(filterNames, customFilter) {
     nodes.walk(function (rule) {
       var filterRule = false;
       filterNamesArray.some(function (filterName) {
-        filterDefinitions[filterName].some(function (filter) {
-          filterRule = extractNodeRecursively(rule, filter);
-          return filterRule;
-        });
+        filterRule = extractNodeRecursively(rule, filterDefinitions[filterName]);
         return filterRule;
       });
       if (!filterRule) { rule.remove(); }
