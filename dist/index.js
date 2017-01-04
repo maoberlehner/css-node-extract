@@ -4,6 +4,16 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
+/**
+ * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Object} filter
+ *   Filter object.
+ * @return {Boolean}
+ *   Returns true if the node (or one of its parents) matches the filter and false if not.
+ */
 function extractNodeRecursively(node, filter) {
   if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filter); }
 
@@ -23,6 +33,11 @@ function extractNodeRecursively(node, filter) {
   return false;
 }
 
+/**
+ * Filter definitions.
+ *
+ * @type {Object}
+ */
 var filterDefinitions = {
   'at-rules': [
     { type: "atrule" } ],
@@ -48,6 +63,16 @@ var filterDefinitions = {
     { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
 };
 
+/**
+ * A PostCSS plugin for extracting nodes from CSS code.
+ *
+ * @param {Array|String} filterNames
+ *   Multiple filter names as array or a single filter name as string.
+ * @param {Object} customFilter
+ *   Custom filter object.
+ * @return {Function}
+ *   PostCSS plugin.
+ */
 function postcssNodeExtract(filterNames, customFilter) {
   if ( filterNames === void 0 ) filterNames = [];
 
@@ -69,6 +94,11 @@ function postcssNodeExtract(filterNames, customFilter) {
   }; });
 }
 
+/**
+ * Default options.
+ *
+ * @type {Object}
+ */
 var defaultOptions = {
   css: "",
   filterNames: [],
@@ -90,6 +120,14 @@ CssNodeExtract.process = function process (options) {
   });
 };
 
+/**
+ * Synchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ * Configuration options.
+ * @return {String}
+ * Extracted nodes.
+ */
 CssNodeExtract.processSync = function processSync (options) {
     if ( options === void 0 ) options = {};
 

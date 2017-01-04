@@ -1,3 +1,13 @@
+/**
+ * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
+ *
+ * @param {Object} node
+ *   A postcss node object.
+ * @param {Object} filter
+ *   Filter object.
+ * @return {Boolean}
+ *   Returns true if the node (or one of its parents) matches the filter and false if not.
+ */
 export default function extractNodeRecursively(node, filter) {
   if (node.parent && node.parent.type !== `root`) return extractNodeRecursively(node.parent, filter);
 

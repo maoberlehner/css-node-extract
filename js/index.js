@@ -1,6 +1,11 @@
 import postcss from 'postcss';
 import postcssNodeExtract from './lib/postcss-node-extract';
 
+/**
+ * Default options.
+ *
+ * @type {Object}
+ */
 const defaultOptions = {
   css: ``,
   filterNames: [],
@@ -12,6 +17,14 @@ const defaultOptions = {
  * CssNodeExtract
  */
 export default class CssNodeExtract {
+  /**
+   * Asynchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {Promise}
+   *   Promise for a string with the extracted nodes.
+   */
   static process(options = {}) {
     return new Promise((resolve) => {
       const result = CssNodeExtract.processSync(options);
@@ -19,6 +32,14 @@ export default class CssNodeExtract {
     });
   }
 
+  /**
+   * Synchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {String}
+   *   Extracted nodes.
+   */
   static processSync(options = {}) {
     const data = Object.assign({}, defaultOptions, options);
     return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
