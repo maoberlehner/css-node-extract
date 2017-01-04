@@ -11,16 +11,16 @@ Extract certain nodes from CSS code.
 - **rules**: `.class-selector`, `#id-selector`,...
 - **silent**: Extract only nodes that do not compile to CSS code (mixins, placeholder selectors, variables,...)
 - **variables**: `$sass-variable` and `@less-variable`
-- **custom**: Define a custom filter.
+- **custom**: Define a custom filter
 
 ## Demos
 ```js
 var CssNodeExtract = require('css-node-extract');
-var postcssScssSyntax = require(`postcss-scss`);
+var postcssScssSyntax = require('postcss-scss');
 
 var options = {
   // CSS source code as string.
-  css: '$variable: 'value'; .selector { } .other-selector { }',
+  css: '$variable: "value"; .selector { } .other-selector { }',
   // Extract only variables.
   filterNames: ['variables'],
   // postcss syntax plugin to add support for SCSS code.
@@ -29,12 +29,12 @@ var options = {
 
 // Asynchronous:
 CssNodeExtract.process(options).then((extractedCss) => {
-  console.log(extractedCss); // Outputs: `$variable: 'value';`.
+  console.log(extractedCss); // Outputs: '$variable: "value";'.
 });
 
 // Synchronous:
 var extractedCss = CssNodeExtract.processSync(options);
-console.log(extractedCss); // Outputs: `$variable: 'value';`.
+console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
 
 ### Custom filter
@@ -47,14 +47,14 @@ var options = {
   filterNames: ['custom'],
   customFilter: [
     [
-      { property: `type`, value: `atrule` },
-      { property: `name`, value: `keyframes` },
+      { property: 'type', value: 'atrule' },
+      { property: 'name', value: 'keyframes' },
     ],
   ]
 };
 
 CssNodeExtract.process(options).then((extractedCss) => {
-  console.log(extractedCss); // Outputs: `@keyframes { }`.
+  console.log(extractedCss); // Outputs: '@keyframes { }'.
 });
 ```
 
