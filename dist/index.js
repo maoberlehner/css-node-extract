@@ -28,6 +28,8 @@ var filterDefinitions = {
     { type: "atrule" } ],
   declarations: [
     { type: "decl" } ],
+  functions: [
+    { type: "atrule", property: { name: "name", value: "function" } } ],
   mixins: [
     { type: "atrule", property: { name: "name", value: "mixin" } },
     { type: "rule", property: { name: "selector", value: /\(.*\)/ } } ],
@@ -36,6 +38,7 @@ var filterDefinitions = {
   silent: [
     { type: "atrule", property: { name: "name", value: "debug" } },
     { type: "atrule", property: { name: "name", value: "error" } },
+    { type: "atrule", property: { name: "name", value: "function" } },
     { type: "atrule", property: { name: "name", value: "mixin" } },
     { type: "atrule", property: { name: "name", value: "warn" } },
     { type: "decl", property: { name: "prop", value: /^[$|@]/ } },

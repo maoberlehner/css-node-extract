@@ -58,6 +58,18 @@ describe(`CssNodeExtract`, () => {
         });
     });
 
+    it(`SCSS: should extract only function at-rules`, () => {
+      const reference = fs.readFileSync(`test/css/reference/functions.scss`, {
+        encoding: `utf8`,
+      });
+      const filterNames = `functions`;
+      const postcssSyntax = postcssScssSyntax;
+      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+        .then((filteredScss) => {
+          expect(filteredScss.trim()).to.equal(reference.trim());
+        });
+    });
+
     it(`SCSS: should extract only mixin at-rules`, () => {
       const reference = fs.readFileSync(`test/css/reference/mixins.scss`, {
         encoding: `utf8`,
