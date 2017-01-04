@@ -4,19 +4,19 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var postcss = _interopDefault(require('postcss'));
 
-function filterRuleRecursive(rule, filter) {
-  if (rule.parent && rule.parent.type !== "root") { return filterRuleRecursive(rule.parent, filter); }
+function extractNodeRecursively(node, filter) {
+  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filter); }
 
-  if (filter.type && filter.type !== rule.type) { return false; }
-  if (filter.property && !rule[filter.property.name]) { return false; }
+  if (filter.type && filter.type !== node.type) { return false; }
+  if (filter.property && !node[filter.property.name]) { return false; }
 
   if (filter.property) {
-    var ruleHasProperty = rule[filter.property.name] === filter.property.value ||
-      rule[filter.property.name].match(filter.property.value);
+    var ruleHasProperty = node[filter.property.name] === filter.property.value ||
+      node[filter.property.name].match(filter.property.value);
     if (ruleHasProperty) {
       return true;
     }
-  } else if (filter.type && filter.type === rule.type) {
+  } else if (filter.type && filter.type === node.type) {
     return true;
   }
 
@@ -50,18 +50,18 @@ var filterDefinitions = {
     { type: "decl", property: { name: "prop", value: /^[$|@]/ } } ],
 };
 
-function postcssFilterExtract(filterNames, customFilter) {
+function postcssNodeExtract(filterNames, customFilter) {
   if ( filterNames === void 0 ) filterNames = [];
 
   var filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
   filterDefinitions.custom = customFilter;
 
-  return postcss.plugin("postcss-filter-extract", function () { return function (nodes) {
+  return postcss.plugin("postcss-node-extract", function () { return function (nodes) {
     nodes.walk(function (rule) {
       var filterRule = false;
       filterNamesArray.some(function (filterName) {
         filterDefinitions[filterName].some(function (filter) {
-          filterRule = filterRuleRecursive(rule, filter);
+          filterRule = extractNodeRecursively(rule, filter);
           return filterRule;
         });
         return filterRule;
@@ -79,25 +79,25 @@ var defaultOptions = {
 };
 
 /**
- * CssFilterExtract
+ * CssNodeExtract
  */
-var CssFilterExtract = function CssFilterExtract () {};
+var CssNodeExtract = function CssNodeExtract () {};
 
-CssFilterExtract.process = function process (options) {
+CssNodeExtract.process = function process (options) {
     if ( options === void 0 ) options = {};
 
   return new Promise(function (resolve) {
-    var result = CssFilterExtract.processSync(options);
+    var result = CssNodeExtract.processSync(options);
     resolve(result);
   });
 };
 
-CssFilterExtract.processSync = function processSync (options) {
+CssNodeExtract.processSync = function processSync (options) {
     if ( options === void 0 ) options = {};
 
   var data = Object.assign({}, defaultOptions, options);
-  return postcss(postcssFilterExtract(data.filterNames, data.customFilter))
+  return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
     .process(data.css, { syntax: data.postcssSyntax }).css;
 };
 
-module.exports = CssFilterExtract;
+module.exports = CssNodeExtract;

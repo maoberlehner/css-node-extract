@@ -1,5 +1,5 @@
 import postcss from 'postcss';
-import filterRuleRecursive from './filter-rule-recursive';
+import extractNodeRecursively from './extract-node-recursively';
 
 const filterDefinitions = {
   'at-rules': [
@@ -34,16 +34,16 @@ const filterDefinitions = {
   ],
 };
 
-export default function postcssFilterExtract(filterNames = [], customFilter) {
+export default function postcssNodeExtract(filterNames = [], customFilter) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
   filterDefinitions.custom = customFilter;
 
-  return postcss.plugin(`postcss-filter-extract`, () => (nodes) => {
+  return postcss.plugin(`postcss-node-extract`, () => (nodes) => {
     nodes.walk((rule) => {
       let filterRule = false;
       filterNamesArray.some((filterName) => {
         filterDefinitions[filterName].some((filter) => {
-          filterRule = filterRuleRecursive(rule, filter);
+          filterRule = extractNodeRecursively(rule, filter);
           return filterRule;
         });
         return filterRule;

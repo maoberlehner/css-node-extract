@@ -1,14 +1,14 @@
-# css-filter-extract
-[![Build Status](https://travis-ci.org/maoberlehner/css-filter-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-filter-extract)
+# css-node-extract
+[![Build Status](https://travis-ci.org/maoberlehner/css-node-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-node-extract)
 
-Run certain filters on (S)CSS / LESS code.
+Extract certain nodes from CSS code.
 
 ## Demos
 
 ### Usage with syntaxes other than pure CSS
 
 ## Development
-See [CONTRIBUTING.md](https://github.com/maoberlehner/css-filter-extract/blob/master/CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/maoberlehner/css-node-extract/blob/master/CONTRIBUTING.md)
 
 ### Testing
 ```bash

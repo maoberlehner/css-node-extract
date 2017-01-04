@@ -1,5 +1,5 @@
 import postcss from 'postcss';
-import postcssFilterExtract from './lib/postcss-filter-extract';
+import postcssNodeExtract from './lib/postcss-node-extract';
 
 const defaultOptions = {
   css: ``,
@@ -9,19 +9,19 @@ const defaultOptions = {
 };
 
 /**
- * CssFilterExtract
+ * CssNodeExtract
  */
-export default class CssFilterExtract {
+export default class CssNodeExtract {
   static process(options = {}) {
     return new Promise((resolve) => {
-      const result = CssFilterExtract.processSync(options);
+      const result = CssNodeExtract.processSync(options);
       resolve(result);
     });
   }
 
   static processSync(options = {}) {
     const data = Object.assign({}, defaultOptions, options);
-    return postcss(postcssFilterExtract(data.filterNames, data.customFilter))
+    return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
       .process(data.css, { syntax: data.postcssSyntax }).css;
   }
 }
