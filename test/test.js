@@ -1,9 +1,10 @@
 /* eslint-env node, mocha */
-const CssNodeExtract = require(`../`);
-const expect = require(`chai`).expect;
-const fs = require(`fs`);
-const postcssScssSyntax = require(`postcss-scss`);
-const postcssLessSyntax = require(`postcss-less`);
+import fs from 'fs';
+import postcssScssSyntax from 'postcss-scss';
+import postcssLessSyntax from 'postcss-less';
+import { expect } from 'chai';
+
+import CssNodeExtract from '../js/index';
 
 // const postcssFilterExtract = require(`../dist/lib/postcss-node-extract.js`);
 
