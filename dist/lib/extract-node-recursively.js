@@ -11,9 +11,9 @@
  *   Returns true if the node matches the filter and false if not.
  */
 function nodeMatchesFilter(node, filter) {
-  if (!node[filter.property]) { return false; }
-  if (node[filter.property] === filter.value) { return true; }
-  if (filter.value instanceof RegExp && filter.value.test(node[filter.property])) { return true; }
+  if (!node[filter.property]) return false;
+  if (node[filter.property] === filter.value) return true;
+  if (filter.value instanceof RegExp && filter.value.test(node[filter.property])) return true;
   return false;
 }
 
@@ -29,15 +29,15 @@ function nodeMatchesFilter(node, filter) {
  *   filter groups and false if not.
  */
 function extractNodeRecursively(node, filterGroups) {
-  if (node.parent && node.parent.type !== "root") { return extractNodeRecursively(node.parent, filterGroups); }
+  if (node.parent && node.parent.type !== 'root') return extractNodeRecursively(node.parent, filterGroups);
 
   var extractNode = false;
 
   filterGroups.some(function (groupOrFilter) {
     var filterGroup = Array.isArray(groupOrFilter) ? groupOrFilter : [groupOrFilter];
-    extractNode = filterGroup.filter(
-      function (filter) { return !nodeMatchesFilter(node, filter); }
-    ).length === 0;
+    extractNode = filterGroup.filter(function (filter) {
+      return !nodeMatchesFilter(node, filter);
+    }).length === 0;
     return extractNode;
   });
 
