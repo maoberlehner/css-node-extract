@@ -29,7 +29,7 @@ function nodeMatchesFilter(node, filter) {
  *   filter groups and false if not.
  */
 function extractNodeRecursively(node, filterGroups) {
-  if (node.parent && node.parent.type !== "root") return extractNodeRecursively(node.parent, filterGroups);
+  if (node.parent && node.parent.type !== 'root') return extractNodeRecursively(node.parent, filterGroups);
 
   var extractNode = false;
 

@@ -6,8 +6,6 @@ import { expect } from 'chai';
 
 import CssNodeExtract from '../js/index';
 
-// const postcssFilterExtract = require(`../dist/lib/postcss-node-extract.js`);
-
 /** @test {CssNodeExtract} */
 describe(`CssNodeExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
