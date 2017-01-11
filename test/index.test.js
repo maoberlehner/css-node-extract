@@ -140,7 +140,7 @@ describe(`CssNodeExtract`, () => {
         encoding: `utf8`,
       });
       const filterNames = `mixins`;
-      const postcssSyntax = postcssScssSyntax;
+      const postcssSyntax = postcssLessSyntax;
       return CssNodeExtract.process({ css: less, filterNames, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
