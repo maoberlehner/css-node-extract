@@ -135,6 +135,18 @@ describe(`CssNodeExtract`, () => {
         });
     });
 
+    it(`LESS: should extract only declaration rules`, () => {
+      const reference = fs.readFileSync(`test/css/reference/declarations.less`, {
+        encoding: `utf8`,
+      });
+      const filterNames = [`declarations`];
+      const postcssSyntax = postcssLessSyntax;
+      return CssNodeExtract.process({ css: less, filterNames, postcssSyntax })
+        .then((filteredLess) => {
+          expect(filteredLess.trim()).to.equal(reference.trim());
+        });
+    });
+
     it(`LESS: should extract only mixin rules`, () => {
       const reference = fs.readFileSync(`test/css/reference/mixins.less`, {
         encoding: `utf8`,
