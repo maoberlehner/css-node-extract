@@ -34,7 +34,7 @@
     "rollup-plugin-babel": "^2.7.1"
   },
   "main": "dist/index.js",
-  "jsnext:main": "js/index.js",
+  "module": "js/index.js",
   "scripts": {
     "scripts:bundle": "rm -R dist && rollup --config --format cjs --output dist/index.js js/index.js && rollup --config --format cjs --output dist/lib/extract-node-recursively.js js/lib/extract-node-recursively.js && rollup --config --format cjs --output dist/lib/filter-definitions.js js/lib/filter-definitions.js && rollup --config --format cjs --output dist/lib/node-matches-filter.js js/lib/node-matches-filter.js && rollup --config --format cjs --output dist/lib/postcss-node-extract.js js/lib/postcss-node-extract.js",
     "scripts:lint": "eslint js/* test/*",
