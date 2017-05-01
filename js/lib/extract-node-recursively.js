@@ -19,7 +19,7 @@ export default function extractNodeRecursively(node, filterGroups) {
   filterGroups.some((groupOrFilter) => {
     const filterGroup = Array.isArray(groupOrFilter) ? groupOrFilter : [groupOrFilter];
     extractNode = filterGroup.filter(
-      filter => !nodeMatchesFilter(node, filter)
+      filter => !nodeMatchesFilter(node, filter),
     ).length === 0;
     return extractNode;
   });
