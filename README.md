@@ -82,6 +82,25 @@ processSync(options);
 console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
 
+## Upgrade from 0.x.x to 1.x.x
+With version 1.0.0 the `filterNames` option was renamed to `filters`.
+
+```js
+// New
+var options = {
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  filters: ['variables'],
+  postcssSyntax: postcssScssSyntax
+};
+
+// Old
+var options = {
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  filterNames: ['variables'],
+  postcssSyntax: postcssScssSyntax
+};
+```
+
 ## Development
 See [CONTRIBUTING.md](https://github.com/maoberlehner/css-node-extract/blob/master/CONTRIBUTING.md)
 
