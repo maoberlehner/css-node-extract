@@ -15,36 +15,36 @@ Extract certain nodes from CSS code.
 
 ## Demos
 ```js
-var CssNodeExtract = require('css-node-extract');
+var cssNodeExtract = require('css-node-extract');
 var postcssScssSyntax = require('postcss-scss');
 
 var options = {
   // CSS source code as string.
   css: '$variable: "value"; .selector { } .other-selector { }',
   // Extract only variables.
-  filterNames: ['variables'],
+  filters: ['variables'],
   // postcss syntax plugin to add support for SCSS code.
   postcssSyntax: postcssScssSyntax
 };
 
 // Asynchronous:
-CssNodeExtract.process(options).then((extractedCss) => {
+cssNodeExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: '$variable: "value";'.
 });
 
 // Synchronous:
-var extractedCss = CssNodeExtract.processSync(options);
+var extractedCss = cssNodeExtract.processSync(options);
 console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
 
 ### Custom filter
 ```js
-var CssNodeExtract = require('css-node-extract');
+var cssNodeExtract = require('css-node-extract');
 
 var options = {
   // CSS source code as string.
   css: '@keyframes { } .selector { } .other-selector { }',
-  filterNames: ['custom'],
+  filters: ['custom'],
   customFilter: [
     [
       { property: 'type', value: 'atrule' },
@@ -53,9 +53,52 @@ var options = {
   ]
 };
 
-CssNodeExtract.process(options).then((extractedCss) => {
+cssNodeExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: '@keyframes { }'.
 });
+```
+
+### ES2015 named exports
+```js
+import { process, processSync } from 'css-node-extract';
+import postcssScssSyntax from 'postcss-scss';
+
+const options = {
+  // CSS source code as string.
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  // Extract only variables.
+  filters: ['variables'],
+  // postcss syntax plugin to add support for SCSS code.
+  postcssSyntax: postcssScssSyntax
+};
+
+// Asynchronous:
+process(options).then((extractedCss) => {
+  console.log(extractedCss); // Outputs: '$variable: "value";'.
+});
+
+// Synchronous:
+processSync(options);
+console.log(extractedCss); // Outputs: '$variable: "value";'.
+```
+
+## Upgrade from 0.x.x to 1.x.x
+With version 1.0.0 the `filterNames` option was renamed to `filters`.
+
+```js
+// New
+var options = {
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  filters: ['variables'],
+  postcssSyntax: postcssScssSyntax
+};
+
+// Old
+var options = {
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  filterNames: ['variables'],
+  postcssSyntax: postcssScssSyntax
+};
 ```
 
 ## Development
