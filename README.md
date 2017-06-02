@@ -15,7 +15,7 @@ Extract certain nodes from CSS code.
 
 ## Demos
 ```js
-var CssNodeExtract = require('css-node-extract');
+var cssNodeExtract = require('css-node-extract');
 var postcssScssSyntax = require('postcss-scss');
 
 var options = {
@@ -28,18 +28,18 @@ var options = {
 };
 
 // Asynchronous:
-CssNodeExtract.process(options).then((extractedCss) => {
+cssNodeExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: '$variable: "value";'.
 });
 
 // Synchronous:
-var extractedCss = CssNodeExtract.processSync(options);
+var extractedCss = cssNodeExtract.processSync(options);
 console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
 
 ### Custom filter
 ```js
-var CssNodeExtract = require('css-node-extract');
+var cssNodeExtract = require('css-node-extract');
 
 var options = {
   // CSS source code as string.
@@ -53,7 +53,7 @@ var options = {
   ]
 };
 
-CssNodeExtract.process(options).then((extractedCss) => {
+cssNodeExtract.process(options).then((extractedCss) => {
   console.log(extractedCss); // Outputs: '@keyframes { }'.
 });
 ```

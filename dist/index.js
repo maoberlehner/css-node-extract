@@ -94,10 +94,6 @@ function postcssNodeExtract() {
   });
 }
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 /**
  * Default options.
  *
@@ -111,54 +107,43 @@ var defaultOptions = {
 };
 
 /**
- * CssNodeExtract
+ * cssNodeExtract
  */
+var index = {
+  /**
+   * Asynchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {Promise}
+   *   Promise for a string with the extracted nodes.
+   */
+  process: function process() {
+    var _this = this;
 
-var CssNodeExtract = function () {
-  function CssNodeExtract() {
-    _classCallCheck(this, CssNodeExtract);
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    return new Promise(function (resolve) {
+      var result = _this.processSync(options);
+      resolve(result);
+    });
+  },
+
+
+  /**
+   * Synchronously extract nodes from a string.
+   *
+   * @param {Object} options
+   *   Configuration options.
+   * @return {String}
+   *   Extracted nodes.
+   */
+  processSync: function processSync() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var data = Object.assign({}, defaultOptions, options);
+    return postcss(postcssNodeExtract(data.filterNames, data.customFilter)).process(data.css, { syntax: data.postcssSyntax }).css;
   }
+};
 
-  _createClass(CssNodeExtract, null, [{
-    key: 'process',
-
-    /**
-     * Asynchronously extract nodes from a string.
-     *
-     * @param {Object} options
-     *   Configuration options.
-     * @return {Promise}
-     *   Promise for a string with the extracted nodes.
-     */
-    value: function process() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      return new Promise(function (resolve) {
-        var result = CssNodeExtract.processSync(options);
-        resolve(result);
-      });
-    }
-
-    /**
-     * Synchronously extract nodes from a string.
-     *
-     * @param {Object} options
-     *   Configuration options.
-     * @return {String}
-     *   Extracted nodes.
-     */
-
-  }, {
-    key: 'processSync',
-    value: function processSync() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      var data = Object.assign({}, defaultOptions, options);
-      return postcss(postcssNodeExtract(data.filterNames, data.customFilter)).process(data.css, { syntax: data.postcssSyntax }).css;
-    }
-  }]);
-
-  return CssNodeExtract;
-}();
-
-module.exports = CssNodeExtract;
+module.exports = index;

@@ -4,21 +4,21 @@ import postcssScssSyntax from 'postcss-scss';
 import postcssLessSyntax from 'postcss-less';
 import { expect } from 'chai';
 
-import CssNodeExtract from '../js/index';
+import cssNodeExtract from '../js/index';
 
-/** @test {CssNodeExtract} */
-describe(`CssNodeExtract`, () => {
+/** @test {cssNodeExtract} */
+describe(`cssNodeExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const less = fs.readFileSync(`test/css/test.less`, { encoding: `utf8` });
 
-  it(`should be a function`, () => {
-    expect(typeof CssNodeExtract).to.equal(`function`);
+  it(`should be a object`, () => {
+    expect(typeof cssNodeExtract).to.equal(`object`);
   });
 
-  /** @test {CssNodeExtract.process} */
+  /** @test {cssNodeExtract.process} */
   describe(`process()`, () => {
     it(`should be a function`, () => {
-      expect(typeof CssNodeExtract.process).to.equal(`function`);
+      expect(typeof cssNodeExtract.process).to.equal(`function`);
     });
 
     it(`SCSS: should extract only at-rules`, () => {
@@ -27,7 +27,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `at-rules`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -39,7 +39,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = [`mixins`, `variables`];
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -51,7 +51,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `declarations`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -63,7 +63,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `functions`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -75,7 +75,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `mixins`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -87,7 +87,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `rules`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -99,7 +99,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `silent`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -111,7 +111,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `variables`;
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -129,7 +129,7 @@ describe(`CssNodeExtract`, () => {
         ],
       ];
       const postcssSyntax = postcssScssSyntax;
-      return CssNodeExtract.process({ css: scss, filterNames, customFilter, postcssSyntax })
+      return cssNodeExtract.process({ css: scss, filterNames, customFilter, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -141,7 +141,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = [`declarations`];
       const postcssSyntax = postcssLessSyntax;
-      return CssNodeExtract.process({ css: less, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: less, filterNames, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });
@@ -153,7 +153,7 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `mixins`;
       const postcssSyntax = postcssLessSyntax;
-      return CssNodeExtract.process({ css: less, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: less, filterNames, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });
@@ -165,17 +165,17 @@ describe(`CssNodeExtract`, () => {
       });
       const filterNames = `silent`;
       const postcssSyntax = postcssLessSyntax;
-      return CssNodeExtract.process({ css: less, filterNames, postcssSyntax })
+      return cssNodeExtract.process({ css: less, filterNames, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });
     });
   });
 
-  /** @test {CssNodeExtract.processSync} */
+  /** @test {cssNodeExtract.processSync} */
   describe(`processSync()`, () => {
     it(`should be a function`, () => {
-      expect(typeof CssNodeExtract.processSync).to.equal(`function`);
+      expect(typeof cssNodeExtract.processSync).to.equal(`function`);
     });
   });
 });

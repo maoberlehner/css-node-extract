@@ -14,9 +14,9 @@ const defaultOptions = {
 };
 
 /**
- * CssNodeExtract
+ * cssNodeExtract
  */
-export default class CssNodeExtract {
+export default {
   /**
    * Asynchronously extract nodes from a string.
    *
@@ -25,12 +25,12 @@ export default class CssNodeExtract {
    * @return {Promise}
    *   Promise for a string with the extracted nodes.
    */
-  static process(options = {}) {
+  process(options = {}) {
     return new Promise((resolve) => {
-      const result = CssNodeExtract.processSync(options);
+      const result = this.processSync(options);
       resolve(result);
     });
-  }
+  },
 
   /**
    * Synchronously extract nodes from a string.
@@ -40,9 +40,9 @@ export default class CssNodeExtract {
    * @return {String}
    *   Extracted nodes.
    */
-  static processSync(options = {}) {
+  processSync(options = {}) {
     const data = Object.assign({}, defaultOptions, options);
     return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
       .process(data.css, { syntax: data.postcssSyntax }).css;
-  }
-}
+  },
+};
