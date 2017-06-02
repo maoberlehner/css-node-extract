@@ -36,11 +36,10 @@
   "main": "dist/index.js",
   "module": "js/index.js",
   "scripts": {
-    "scripts:bundle": "rm -R dist && rollup --config --format cjs --output dist/index.js js/index.js && rollup --config --format cjs --output dist/lib/extract-node-recursively.js js/lib/extract-node-recursively.js && rollup --config --format cjs --output dist/lib/filter-definitions.js js/lib/filter-definitions.js && rollup --config --format cjs --output dist/lib/node-matches-filter.js js/lib/node-matches-filter.js && rollup --config --format cjs --output dist/lib/postcss-node-extract.js js/lib/postcss-node-extract.js",
-    "scripts:lint": "eslint js/* test/*",
-    "scripts:lint-no-error": "eslint js/* test/* || exit 0",
-    "scripts:doc": "esdoc -c .esdocrc",
-    "scripts": "npm run scripts:bundle && npm run scripts:lint-no-error",
+    "bundle": "rm -R dist && rollup --config --format cjs --output dist/index.js js/index.js && rollup --config --format cjs --output dist/lib/extract-node-recursively.js js/lib/extract-node-recursively.js && rollup --config --format cjs --output dist/lib/filter-definitions.js js/lib/filter-definitions.js && rollup --config --format cjs --output dist/lib/node-matches-filter.js js/lib/node-matches-filter.js && rollup --config --format cjs --output dist/lib/postcss-node-extract.js js/lib/postcss-node-extract.js",
+    "lint:no-error": "eslint js/* test/* || exit 0",
+    "lint": "eslint js/* test/*",
+    "build": "npm run bundle && npm run lint:no-error",
     "test:lib": "mocha test/lib/*.test.js --compilers js:babel-core/register",
     "test:index": "mocha test/index.test.js --compilers js:babel-core/register",
     "test": "mocha test/* --compilers js:babel-core/register"
@@ -48,7 +47,7 @@
   "config": {
     "pre-git": {
       "pre-commit": [
-        "npm run scripts:lint"
+        "npm run lint"
       ],
       "pre-push": [
         "npm test"
