@@ -1,6 +1,5 @@
 .babelrc
 .editorconfig
-.esdocrc
 .eslintrc
 .gitattributes
 .travis.yml

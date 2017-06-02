@@ -8,13 +8,6 @@ var postcss = _interopDefault(require('postcss'));
 
 /**
  * Check if a node matches the given filter.
- *
- * @param {Object} node
- *   A postcss node object.
- * @param {Object} filter
- *   Filter object.
- * @return {Boolean}
- *   Returns true if the node matches the filter and false if not.
  */
 function nodeMatchesFilter(node, filter) {
   if (!node[filter.property]) return false;
@@ -25,14 +18,6 @@ function nodeMatchesFilter(node, filter) {
 
 /**
  * Whiteliste a node if it (or one of the nodes parents) matches the given filter.
- *
- * @param {Object} node
- *   A postcss node object.
- * @param {Array} filterGroups
- *   Array of filter groups.
- * @return {Boolean}
- *   Returns true if the node (or one of its parents) matches one or more
- *   filter groups and false if not.
  */
 function extractNodeRecursively(node, filterGroups) {
   if (node.parent && node.parent.type !== 'root') return extractNodeRecursively(node.parent, filterGroups);
@@ -52,8 +37,6 @@ function extractNodeRecursively(node, filterGroups) {
 
 /**
  * Filter definitions.
- *
- * @type {Object}
  */
 var filterDefinitions = {
   'at-rules': [{ property: 'type', value: 'atrule' }],
@@ -67,13 +50,6 @@ var filterDefinitions = {
 
 /**
  * A PostCSS plugin for extracting nodes from CSS code.
- *
- * @param {Array|String} filterNames
- *   Multiple filter names as array or a single filter name as string.
- * @param {Object} customFilter
- *   Custom filter object.
- * @return {Function}
- *   PostCSS plugin.
  */
 function postcssNodeExtract() {
   var filterNames = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -98,8 +74,6 @@ function postcssNodeExtract() {
 
 /**
  * Default options.
- *
- * @type {Object}
  */
 var defaultOptions = {
   css: '',
@@ -110,11 +84,6 @@ var defaultOptions = {
 
 /**
  * Synchronously extract nodes from a string.
- *
- * @param {Object} options
- *   Configuration options.
- * @return {String}
- *   Extracted nodes.
  */
 var processSync = function processSync() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -125,11 +94,6 @@ var processSync = function processSync() {
 
 /**
  * Asynchronously extract nodes from a string.
- *
- * @param {Object} options
- *   Configuration options.
- * @return {Promise}
- *   Promise for a string with the extracted nodes.
  */
 var process = function process() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};

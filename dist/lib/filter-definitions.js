@@ -2,8 +2,6 @@
 
 /**
  * Filter definitions.
- *
- * @type {Object}
  */
 var filterDefinitions = {
   'at-rules': [{ property: 'type', value: 'atrule' }],

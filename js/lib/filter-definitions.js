@@ -1,7 +1,5 @@
 /**
  * Filter definitions.
- *
- * @type {Object}
  */
 const filterDefinitions = {
   'at-rules': [

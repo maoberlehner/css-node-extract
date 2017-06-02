@@ -3,8 +3,6 @@ import postcssNodeExtract from './lib/postcss-node-extract';
 
 /**
  * Default options.
- *
- * @type {Object}
  */
 const defaultOptions = {
   css: ``,
@@ -15,11 +13,6 @@ const defaultOptions = {
 
 /**
  * Synchronously extract nodes from a string.
- *
- * @param {Object} options
- *   Configuration options.
- * @return {String}
- *   Extracted nodes.
  */
 export const processSync = (options = {}) => {
   const data = Object.assign({}, defaultOptions, options);
@@ -29,11 +22,6 @@ export const processSync = (options = {}) => {
 
 /**
  * Asynchronously extract nodes from a string.
- *
- * @param {Object} options
- *   Configuration options.
- * @return {Promise}
- *   Promise for a string with the extracted nodes.
  */
 export const process = (options = {}) => new Promise((resolve) => {
   const result = processSync(options);

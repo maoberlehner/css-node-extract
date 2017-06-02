@@ -4,13 +4,6 @@ import filterDefinitions from './filter-definitions';
 
 /**
  * A PostCSS plugin for extracting nodes from CSS code.
- *
- * @param {Array|String} filterNames
- *   Multiple filter names as array or a single filter name as string.
- * @param {Object} customFilter
- *   Custom filter object.
- * @return {Function}
- *   PostCSS plugin.
  */
 export default function postcssNodeExtract(filterNames = [], customFilter) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
