@@ -58,6 +58,30 @@ cssNodeExtract.process(options).then((extractedCss) => {
 });
 ```
 
+### ES2015 named exports
+```js
+import { process, processSync } from 'css-node-extract';
+import postcssScssSyntax from 'postcss-scss';
+
+const options = {
+  // CSS source code as string.
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  // Extract only variables.
+  filterNames: ['variables'],
+  // postcss syntax plugin to add support for SCSS code.
+  postcssSyntax: postcssScssSyntax
+};
+
+// Asynchronous:
+process(options).then((extractedCss) => {
+  console.log(extractedCss); // Outputs: '$variable: "value";'.
+});
+
+// Synchronous:
+processSync(options);
+console.log(extractedCss); // Outputs: '$variable: "value";'.
+```
+
 ## Development
 See [CONTRIBUTING.md](https://github.com/maoberlehner/css-node-extract/blob/master/CONTRIBUTING.md)
 

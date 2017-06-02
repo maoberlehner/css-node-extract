@@ -14,35 +14,36 @@ const defaultOptions = {
 };
 
 /**
+ * Synchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ *   Configuration options.
+ * @return {String}
+ *   Extracted nodes.
+ */
+export const processSync = (options = {}) => {
+  const data = Object.assign({}, defaultOptions, options);
+  return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
+    .process(data.css, { syntax: data.postcssSyntax }).css;
+};
+
+/**
+ * Asynchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ *   Configuration options.
+ * @return {Promise}
+ *   Promise for a string with the extracted nodes.
+ */
+export const process = (options = {}) => new Promise((resolve) => {
+  const result = processSync(options);
+  resolve(result);
+});
+
+/**
  * cssNodeExtract
  */
 export default {
-  /**
-   * Asynchronously extract nodes from a string.
-   *
-   * @param {Object} options
-   *   Configuration options.
-   * @return {Promise}
-   *   Promise for a string with the extracted nodes.
-   */
-  process(options = {}) {
-    return new Promise((resolve) => {
-      const result = this.processSync(options);
-      resolve(result);
-    });
-  },
-
-  /**
-   * Synchronously extract nodes from a string.
-   *
-   * @param {Object} options
-   *   Configuration options.
-   * @return {String}
-   *   Extracted nodes.
-   */
-  processSync(options = {}) {
-    const data = Object.assign({}, defaultOptions, options);
-    return postcss(postcssNodeExtract(data.filterNames, data.customFilter))
-      .process(data.css, { syntax: data.postcssSyntax }).css;
-  },
+  process,
+  processSync,
 };

@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var postcss = _interopDefault(require('postcss'));
@@ -107,43 +109,44 @@ var defaultOptions = {
 };
 
 /**
+ * Synchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ *   Configuration options.
+ * @return {String}
+ *   Extracted nodes.
+ */
+var processSync = function processSync() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var data = Object.assign({}, defaultOptions, options);
+  return postcss(postcssNodeExtract(data.filterNames, data.customFilter)).process(data.css, { syntax: data.postcssSyntax }).css;
+};
+
+/**
+ * Asynchronously extract nodes from a string.
+ *
+ * @param {Object} options
+ *   Configuration options.
+ * @return {Promise}
+ *   Promise for a string with the extracted nodes.
+ */
+var process = function process() {
+  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return new Promise(function (resolve) {
+    var result = processSync(options);
+    resolve(result);
+  });
+};
+
+/**
  * cssNodeExtract
  */
 var index = {
-  /**
-   * Asynchronously extract nodes from a string.
-   *
-   * @param {Object} options
-   *   Configuration options.
-   * @return {Promise}
-   *   Promise for a string with the extracted nodes.
-   */
-  process: function process() {
-    var _this = this;
-
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    return new Promise(function (resolve) {
-      var result = _this.processSync(options);
-      resolve(result);
-    });
-  },
-
-
-  /**
-   * Synchronously extract nodes from a string.
-   *
-   * @param {Object} options
-   *   Configuration options.
-   * @return {String}
-   *   Extracted nodes.
-   */
-  processSync: function processSync() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    var data = Object.assign({}, defaultOptions, options);
-    return postcss(postcssNodeExtract(data.filterNames, data.customFilter)).process(data.css, { syntax: data.postcssSyntax }).css;
-  }
+  process: process,
+  processSync: processSync
 };
 
-module.exports = index;
+exports.processSync = processSync;
+exports.process = process;
+exports['default'] = index;
