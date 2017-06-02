@@ -22,7 +22,7 @@ var options = {
   // CSS source code as string.
   css: '$variable: "value"; .selector { } .other-selector { }',
   // Extract only variables.
-  filterNames: ['variables'],
+  filters: ['variables'],
   // postcss syntax plugin to add support for SCSS code.
   postcssSyntax: postcssScssSyntax
 };
@@ -44,7 +44,7 @@ var cssNodeExtract = require('css-node-extract');
 var options = {
   // CSS source code as string.
   css: '@keyframes { } .selector { } .other-selector { }',
-  filterNames: ['custom'],
+  filters: ['custom'],
   customFilter: [
     [
       { property: 'type', value: 'atrule' },
@@ -67,7 +67,7 @@ const options = {
   // CSS source code as string.
   css: '$variable: "value"; .selector { } .other-selector { }',
   // Extract only variables.
-  filterNames: ['variables'],
+  filters: ['variables'],
   // postcss syntax plugin to add support for SCSS code.
   postcssSyntax: postcssScssSyntax
 };

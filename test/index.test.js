@@ -25,9 +25,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/at-rules.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `at-rules`;
+      const filters = `at-rules`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -37,9 +37,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/combined.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = [`mixins`, `variables`];
+      const filters = [`mixins`, `variables`];
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -49,9 +49,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/declarations.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `declarations`;
+      const filters = `declarations`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -61,9 +61,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/functions.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `functions`;
+      const filters = `functions`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -73,9 +73,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/mixins.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `mixins`;
+      const filters = `mixins`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -85,9 +85,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/rules.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `rules`;
+      const filters = `rules`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -97,9 +97,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/silent.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `silent`;
+      const filters = `silent`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -109,9 +109,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/variables.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `variables`;
+      const filters = `variables`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, postcssSyntax })
+      return process({ css: scss, filters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -121,7 +121,7 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/keyframes.scss`, {
         encoding: `utf8`,
       });
-      const filterNames = `custom`;
+      const filters = `custom`;
       const customFilter = [
         [
           { property: `type`, value: `atrule` },
@@ -129,7 +129,7 @@ describe(`cssNodeExtract`, () => {
         ],
       ];
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filterNames, customFilter, postcssSyntax })
+      return process({ css: scss, filters, customFilter, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });
@@ -139,9 +139,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/declarations.less`, {
         encoding: `utf8`,
       });
-      const filterNames = [`declarations`];
+      const filters = [`declarations`];
       const postcssSyntax = postcssLessSyntax;
-      return process({ css: less, filterNames, postcssSyntax })
+      return process({ css: less, filters, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });
@@ -151,9 +151,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/mixins.less`, {
         encoding: `utf8`,
       });
-      const filterNames = `mixins`;
+      const filters = `mixins`;
       const postcssSyntax = postcssLessSyntax;
-      return process({ css: less, filterNames, postcssSyntax })
+      return process({ css: less, filters, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });
@@ -163,9 +163,9 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/silent.less`, {
         encoding: `utf8`,
       });
-      const filterNames = `silent`;
+      const filters = `silent`;
       const postcssSyntax = postcssLessSyntax;
-      return process({ css: less, filterNames, postcssSyntax })
+      return process({ css: less, filters, postcssSyntax })
         .then((filteredLess) => {
           expect(filteredLess.trim()).to.equal(reference.trim());
         });

@@ -73,30 +73,20 @@ function postcssNodeExtract() {
 }
 
 /**
- * Default options.
- */
-var defaultOptions = {
-  css: '',
-  filterNames: [],
-  customFilter: undefined,
-  postcssSyntax: undefined
-};
-
-/**
  * Synchronously extract nodes from a string.
  */
-var processSync = function processSync() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  var data = Object.assign({}, defaultOptions, options);
-  return postcss(postcssNodeExtract(data.filterNames, data.customFilter)).process(data.css, { syntax: data.postcssSyntax }).css;
+var processSync = function processSync(_ref) {
+  var css = _ref.css,
+      filters = _ref.filters,
+      customFilter = _ref.customFilter,
+      postcssSyntax = _ref.postcssSyntax;
+  return postcss(postcssNodeExtract(filters, customFilter)).process(css, { syntax: postcssSyntax }).css;
 };
 
 /**
  * Asynchronously extract nodes from a string.
  */
-var process = function process() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+var process = function process(options) {
   return new Promise(function (resolve) {
     var result = processSync(options);
     resolve(result);
