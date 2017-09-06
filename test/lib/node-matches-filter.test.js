@@ -1,7 +1,6 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai';
+const expect = require(`chai`).expect;
 
-import nodeMatchesFilter from '../../js/lib/node-matches-filter';
+const nodeMatchesFilter = require(`../../dist/lib/node-matches-filter`);
 
 /** @test {nodeMatchesFilter} */
 describe(`nodeMatchesFilter`, () => {
