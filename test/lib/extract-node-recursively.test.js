@@ -1,7 +1,6 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai';
+const expect = require(`chai`).expect;
 
-import extractNodeRecursively from '../../js/lib/extract-node-recursively';
+const extractNodeRecursively = require(`../../dist/lib/extract-node-recursively`);
 
 /** @test {extractNodeRecursively} */
 describe(`extractNodeRecursively`, () => {
