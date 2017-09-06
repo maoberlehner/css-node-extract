@@ -1,10 +1,15 @@
+import { IFilter } from '../interfaces/IFilter';
+import { IFilterDefinitions } from '../interfaces/IFilterDefinitions';
+import { IFilterGroup } from '../interfaces/IFilterGroup';
+
 /**
  * Filter definitions.
  */
-const filterDefinitions = {
-  'at-rules': [
+const filterDefinitions: IFilterDefinitions = {
+  atRules: [
     { property: `type`, value: `atrule` },
   ],
+  custom: [] as IFilterGroup,
   declarations: [
     { property: `type`, value: `decl` },
   ],
@@ -69,4 +74,4 @@ const filterDefinitions = {
   ],
 };
 
-export default filterDefinitions;
+export = filterDefinitions;

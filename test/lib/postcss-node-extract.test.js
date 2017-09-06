@@ -1,7 +1,6 @@
-/* eslint-env node, mocha */
-import { expect } from 'chai';
+const expect = require(`chai`).expect;
 
-import postcssNodeExtract from '../../js/lib/postcss-node-extract';
+const postcssNodeExtract = require(`../../dist/lib/postcss-node-extract`);
 
 /** @test {postcssNodeExtract} */
 describe(`postcssNodeExtract`, () => {
@@ -10,7 +9,6 @@ describe(`postcssNodeExtract`, () => {
   });
 
   it(`should return a postcss plugin named "postcss-node-extract"`, () => {
-    // eslint-disable-next-line no-unused-expressions
     expect(postcssNodeExtract().postcss).to.not.be.undefined;
     expect(postcssNodeExtract().postcss.postcssPlugin).to.equal(`postcss-node-extract`);
   });

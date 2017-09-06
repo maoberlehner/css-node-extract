@@ -1,17 +1,18 @@
-/* eslint-env node, mocha */
-import fs from 'fs';
-import postcssScssSyntax from 'postcss-scss';
-import postcssLessSyntax from 'postcss-less';
-import { expect } from 'chai';
+const fs = require(`fs`);
+const postcssScssSyntax = require(`postcss-scss`);
+const postcssLessSyntax = require(`postcss-less`);
+const expect = require(`chai`).expect;
 
-import cssNodeExtract, { process, processSync } from '../js/index';
+const cssNodeExtract = require(`../`);
+const process = require(`../`).process;
+const processSync = require(`../`).processSync;
 
 /** @test {cssNodeExtract} */
 describe(`cssNodeExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const less = fs.readFileSync(`test/css/test.less`, { encoding: `utf8` });
 
-  it(`should be a object`, () => {
+  it(`should be an object`, () => {
     expect(typeof cssNodeExtract).to.equal(`object`);
   });
 

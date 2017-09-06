@@ -1,5 +1,8 @@
-import postcss from 'postcss';
-import postcssNodeExtract from './lib/postcss-node-extract';
+import * as postcss from 'postcss';
+
+import postcssNodeExtract = require('./lib/postcss-node-extract');
+
+import { IProcessOptions } from './interfaces/IProcessOptions';
 
 /**
  * Synchronously extract nodes from a string.
@@ -9,13 +12,13 @@ export const processSync = ({
   filters,
   customFilter,
   postcssSyntax,
-}) => postcss(postcssNodeExtract(filters, customFilter))
+}: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilter))
   .process(css, { syntax: postcssSyntax }).css;
 
 /**
  * Asynchronously extract nodes from a string.
  */
-export const process = options => new Promise((resolve) => {
+export const process = (options: IProcessOptions) => new Promise((resolve) => {
   const result = processSync(options);
   resolve(result);
 });
