@@ -12,8 +12,9 @@ export const processSync = ({
   filters,
   customFilter,
   postcssSyntax,
+  postcssParser,
 }: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilter))
-  .process(css, { syntax: postcssSyntax }).css;
+  .process(css, { syntax: postcssSyntax, parser: postcssParser }).css;
 
 /**
  * Asynchronously extract nodes from a string.

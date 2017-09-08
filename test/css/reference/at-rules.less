@@ -1,0 +1,28 @@
+@charset 'UTF-8';
+@namespace url(http://www.w3.org/1999/xhtml);
+@document url(http://www.w3.org/);
+
+@font-face {
+  font-family: 'Font face at rule';
+}
+
+@keyframes keyframes-at-rule {
+  0% { content: 'Keyframes at rule 0%'; }
+  100% { content: 'Keyframes at rule 100%'; }
+}
+
+@viewport {
+  orientation: landscape;
+}
+
+@media (min-width: 30em) {
+  .selector-inside-media-at-rule {
+    content: 'Selector inside media at rule';
+  }
+}
+
+@supports (transition: all) {
+  .selector-inside-supports-at-rule {
+    content: 'Selector inside supports at rule';
+  }
+}

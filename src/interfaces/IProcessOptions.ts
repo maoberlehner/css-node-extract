@@ -5,4 +5,5 @@ export interface IProcessOptions {
   filters: string|string[];
   customFilter: IFilterGroup;
   postcssSyntax?: any;
+  postcssParser?: any;
 }
