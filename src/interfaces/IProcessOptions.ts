@@ -1,8 +1,8 @@
-import { IFilterGroup } from './IFilterGroup';
+import { ICustomFilter } from './ICustomFilter';
 
 export interface IProcessOptions {
   css: string;
   filters: string|string[];
-  customFilter: IFilterGroup;
+  customFilters: ICustomFilter[];
   postcssSyntax?: any;
 }

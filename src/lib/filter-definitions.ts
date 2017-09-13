@@ -7,11 +7,14 @@ import { IFilterGroup } from '../interfaces/IFilterGroup';
  */
 const filterDefinitions: IFilterDefinitions = {
   atRules: [
-    { property: `type`, value: `atrule` },
+    [
+      { property: `type`, value: `atrule` },
+    ],
   ],
-  custom: [] as IFilterGroup,
   declarations: [
-    { property: `type`, value: `decl` },
+    [
+      { property: `type`, value: `decl` },
+    ],
   ],
   functions: [
     [
@@ -30,7 +33,9 @@ const filterDefinitions: IFilterDefinitions = {
     ],
   ],
   rules: [
-    { property: `type`, value: `rule` },
+    [
+      { property: `type`, value: `rule` },
+    ],
   ],
   silent: [
     [
