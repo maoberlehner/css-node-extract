@@ -13,7 +13,7 @@ import { IFilterGroup } from '../interfaces/IFilterGroup';
  */
 export = function postcssNodeExtract(
   filterNames: string|string[],
-  customFilters: ICustomFilter[],
+  customFilters: ICustomFilter[]|undefined,
 ) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
   Object.assign(filterDefinitions, customFilters);
