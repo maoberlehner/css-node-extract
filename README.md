@@ -11,7 +11,7 @@ Extract certain nodes from CSS code.
 - **rules**: `.class-selector`, `#id-selector`,...
 - **silent**: Extract only nodes that do not compile to CSS code (mixins, placeholder selectors, variables,...)
 - **variables**: `$sass-variable` and `@less-variable`
-- **custom**: Define a custom filter
+- **make-your-own**: Define custom filters
 
 ## Demos
 ```js
@@ -44,13 +44,15 @@ var cssNodeExtract = require('css-node-extract');
 var options = {
   // CSS source code as string.
   css: '@keyframes { } .selector { } .other-selector { }',
-  filters: ['custom'],
-  customFilter: [
-    [
-      { property: 'type', value: 'atrule' },
-      { property: 'name', value: 'keyframes' }
+  filters: ['my-keyframe-filter'],
+  customFilters: {
+    myKeyframeFilter: [
+      [
+        { property: 'type', value: 'atrule' },
+        { property: 'name', value: 'keyframes' }
+      ]
     ]
-  ]
+  }
 };
 
 cssNodeExtract.process(options).then((extractedCss) => {
@@ -81,6 +83,9 @@ process(options).then((extractedCss) => {
 processSync(options);
 console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
+
+## Upgrade from 1.x.x to 2.x.x
+With version 2.0.0 the handling of custom filters was changed. The `customFilter` option was renamed to `customFilters` and this option now takes an object instead of an array. Instead of defining one custom filter named `custom`, you can now define unlimited custom filters with custom names.
 
 ## Upgrade from 0.x.x to 1.x.x
 With version 1.0.0 the `filterNames` option was renamed to `filters`.

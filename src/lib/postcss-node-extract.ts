@@ -4,15 +4,19 @@ import * as postcss from 'postcss';
 import extractNodeRecursively = require('./extract-node-recursively');
 import filterDefinitions = require('./filter-definitions');
 
+import { ICustomFilter } from '../interfaces/ICustomFilter';
 import { IFilter } from '../interfaces/IFilter';
 import { IFilterGroup } from '../interfaces/IFilterGroup';
 
 /**
  * A PostCSS plugin for extracting nodes from CSS code.
  */
-export = function postcssNodeExtract(filterNames: string|string[], customFilter: IFilterGroup) {
+export = function postcssNodeExtract(
+  filterNames: string|string[],
+  customFilters: ICustomFilter[],
+) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
-  filterDefinitions.custom = customFilter;
+  Object.assign(filterDefinitions, customFilters);
 
   return postcss.plugin(`postcss-node-extract`, () => (nodes) => {
     nodes.walk((rule) => {

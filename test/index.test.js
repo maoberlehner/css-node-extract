@@ -122,15 +122,17 @@ describe(`cssNodeExtract`, () => {
       const reference = fs.readFileSync(`test/css/reference/keyframes.scss`, {
         encoding: `utf8`,
       });
-      const filters = `custom`;
-      const customFilter = [
-        [
-          { property: `type`, value: `atrule` },
-          { property: `name`, value: `keyframes` },
+      const filters = `media-keyframes`;
+      const customFilters = {
+        mediaKeyframes: [
+          [
+            { property: `type`, value: `atrule` },
+            { property: `name`, value: `keyframes` },
+          ],
         ],
-      ];
+      };
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filters, customFilter, postcssSyntax })
+      return process({ css: scss, filters, customFilters, postcssSyntax })
         .then((filteredScss) => {
           expect(filteredScss.trim()).to.equal(reference.trim());
         });

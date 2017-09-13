@@ -10,9 +10,9 @@ import { IProcessOptions } from './interfaces/IProcessOptions';
 export const processSync = ({
   css,
   filters,
-  customFilter,
+  customFilters,
   postcssSyntax,
-}: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilter))
+}: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilters))
   .process(css, { syntax: postcssSyntax }).css;
 
 /**
