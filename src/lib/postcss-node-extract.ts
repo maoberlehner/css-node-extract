@@ -14,6 +14,7 @@ import { IFilterGroup } from '../interfaces/IFilterGroup';
 export = function postcssNodeExtract(
   filterNames: string|string[],
   customFilters: ICustomFilter[]|undefined,
+  preserveLines = false,
 ) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
   Object.assign(filterDefinitions, customFilters);
@@ -27,6 +28,16 @@ export = function postcssNodeExtract(
         return filterRule;
       });
       if (!filterRule) {
+        if (preserveLines) {
+          const ruleLines = rule.toString().split(/\r\n|\r|\n/).length;
+
+          rule.cloneBefore({
+            type: `comment`,
+            text: `START preserve lines${'\n'.repeat(ruleLines - 1)}preserve lines END`,
+            raws: Object.assign(rule.raws, { left: ' ', right: ' ' }),
+          });
+        }
+
         rule.remove();
       }
     });

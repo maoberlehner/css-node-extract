@@ -60,6 +60,26 @@ cssNodeExtract.process(options).then((extractedCss) => {
 });
 ```
 
+### Preserve lines
+Usually `css-node-extract` removes all nodes which do not match the given filters. However under some circumstances it might be useful to preserve the original line numbers (e.g. to keep source map references intact).
+
+```js
+var cssNodeExtract = require('css-node-extract');
+
+var options = {
+  css: '$variable: "value"; .selector { } .other-selector { }',
+  filters: ['variables'],
+  postcssSyntax: postcssScssSyntax,
+  preserveLines: true
+};
+
+cssNodeExtract.process(options).then((extractedCss) => {
+  // Outputs the extracted nodes with empty lines where
+  // other nodes got removed to preserve line numbers.
+  console.log(extractedCss);
+});
+```
+
 ### ES2015 named exports
 ```js
 import { process, processSync } from 'css-node-extract';
