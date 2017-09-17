@@ -34,6 +34,18 @@ describe(`cssNodeExtract`, () => {
         });
     });
 
+    it(`SCSS: should extract only at-rules and preserve lines`, () => {
+      const reference = fs.readFileSync(`test/css/reference/at-rules-preserve-lines.scss`, {
+        encoding: `utf8`,
+      });
+      const filters = `at-rules`;
+      const postcssSyntax = postcssScssSyntax;
+      return process({ css: scss, filters, postcssSyntax, preserveLines: true })
+        .then((filteredScss) => {
+          expect(filteredScss.trim()).to.equal(reference.trim());
+        });
+    });
+
     it(`SCSS: should extract only mixin at-rules and variable declarations`, () => {
       const reference = fs.readFileSync(`test/css/reference/combined.scss`, {
         encoding: `utf8`,

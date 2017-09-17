@@ -12,8 +12,10 @@ export const processSync = ({
   filters,
   customFilters,
   postcssSyntax,
-}: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilters))
-  .process(css, { syntax: postcssSyntax }).css;
+  preserveLines,
+}: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilters, preserveLines))
+  .process(css, { syntax: postcssSyntax }).css
+  .replace(/\/\* START preserve lines|preserve lines END \*\//g, ``);
 
 /**
  * Asynchronously extract nodes from a string.

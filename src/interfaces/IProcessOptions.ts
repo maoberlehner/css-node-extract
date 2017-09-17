@@ -5,4 +5,5 @@ export interface IProcessOptions {
   filters: string|string[];
   customFilters?: ICustomFilter[];
   postcssSyntax?: any;
+  preserveLines?: boolean;
 }

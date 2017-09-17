@@ -1,0 +1,135 @@
+@charset 'UTF-8';
+@namespace url(http://www.w3.org/1999/xhtml);
+@document url(http://www.w3.org/);
+@import 'import-test.scss';
+
+@font-face {
+  font-family: 'Font face at rule';
+}
+
+@keyframes keyframes-at-rule {
+  0% { content: 'Keyframes at rule 0%'; }
+  100% { content: 'Keyframes at rule 100%'; }
+}
+
+@viewport {
+  orientation: landscape;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (min-width: 30em) {
+  .selector-inside-media-at-rule {
+    content: 'Selector inside media at rule';
+  }
+}
+
+
+
+
+
+
+
+@supports (transition: all) {
+  .selector-inside-supports-at-rule {
+    content: 'Selector inside supports at rule';
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+@function function-at-rule() {
+  @return 'function at rule';
+}
+
+@mixin mixin-at-rule {
+  .selector-inside-mixin-at-rule {
+    content: 'Selector inside mixin at rule';
+  }
+}
+
+
+
+
+
+@if true {
+  .selector-inside-if-at-rule {
+    content: 'Selector inside if at rule';
+  }
+} @else {
+  .selector-inside-else-at-rule {
+    content: 'Selector inside else at rule';
+  }
+}
+
+
+
+
+
+
+
+@for $i from 1 through 3 {
+  .selector-inside-for-at-rule {
+    content: 'Selector inside for at rule';
+  }
+}
+
+
+
+
+
+
+
+@each $thing in $things {
+  .selector-inside-each-at-rule {
+    content: 'Selector inside each at rule';
+  }
+}
+
+
+
+
+
+
+
+@while $i > 0 {
+  .selector-inside-while-at-rule {
+    content: 'Selector inside while at rule';
+  }
+}
+
+
+
+
+
+
+
+@debug 'Debug at rule';
+@warn 'Warn at rule';
+@error 'Error at rule';
+
+// Preprocessor comment test.
