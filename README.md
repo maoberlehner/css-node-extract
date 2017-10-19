@@ -15,10 +15,10 @@ Extract certain nodes from CSS code.
 
 ## Demos
 ```js
-var cssNodeExtract = require('css-node-extract');
-var postcssScssSyntax = require('postcss-scss');
+const cssNodeExtract = require('css-node-extract');
+const postcssScssSyntax = require('postcss-scss');
 
-var options = {
+const options = {
   // CSS source code as string.
   css: '$variable: "value"; .selector { } .other-selector { }',
   // Extract only variables.
@@ -33,15 +33,15 @@ cssNodeExtract.process(options).then((extractedCss) => {
 });
 
 // Synchronous:
-var extractedCss = cssNodeExtract.processSync(options);
+const extractedCss = cssNodeExtract.processSync(options);
 console.log(extractedCss); // Outputs: '$variable: "value";'.
 ```
 
 ### Custom filter
 ```js
-var cssNodeExtract = require('css-node-extract');
+const cssNodeExtract = require('css-node-extract');
 
-var options = {
+const options = {
   // CSS source code as string.
   css: '@keyframes { } .selector { } .other-selector { }',
   filters: ['my-keyframe-filter'],
@@ -64,9 +64,9 @@ cssNodeExtract.process(options).then((extractedCss) => {
 Usually `css-node-extract` removes all nodes which do not match the given filters. However under some circumstances it might be useful to preserve the original line numbers (e.g. to keep source map references intact).
 
 ```js
-var cssNodeExtract = require('css-node-extract');
+const cssNodeExtract = require('css-node-extract');
 
-var options = {
+const options = {
   css: '$variable: "value"; .selector { } .other-selector { }',
   filters: ['variables'],
   postcssSyntax: postcssScssSyntax,
@@ -112,14 +112,14 @@ With version 1.0.0 the `filterNames` option was renamed to `filters`.
 
 ```js
 // New
-var options = {
+const options = {
   css: '$variable: "value"; .selector { } .other-selector { }',
   filters: ['variables'],
   postcssSyntax: postcssScssSyntax
 };
 
 // Old
-var options = {
+const options = {
   css: '$variable: "value"; .selector { } .other-selector { }',
   filterNames: ['variables'],
   postcssSyntax: postcssScssSyntax
