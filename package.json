@@ -24,17 +24,17 @@
   },
   "dependencies": {
     "change-case": "^3.0.1",
-    "postcss": "^6.0.11"
+    "postcss": "^6.0.13"
   },
   "devDependencies": {
     "@types/jest": "^21.1.5",
     "jest": "^21.2.1",
-    "postcss-less": "^1.1.0",
+    "postcss-less": "^1.1.1",
     "postcss-scss": "^1.0.2",
     "rimraf": "^2.6.2",
     "ts-jest": "^21.1.4",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
