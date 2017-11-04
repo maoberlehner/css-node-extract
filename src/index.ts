@@ -2,6 +2,8 @@ import * as postcss from 'postcss';
 
 import postcssNodeExtract = require('./lib/postcss-node-extract');
 
+import { PRESERVE_LINES_END, PRESERVE_LINES_START } from './const';
+
 import { IProcessOptions } from './interfaces/IProcessOptions';
 
 /**
@@ -15,7 +17,7 @@ export const processSync = ({
   preserveLines,
 }: IProcessOptions) => postcss(postcssNodeExtract(filters, customFilters, preserveLines))
   .process(css, { syntax: postcssSyntax }).css
-  .replace(/\/\* START preserve lines|preserve lines END \*\//g, ``);
+  .replace(new RegExp(`\\/\\* ${PRESERVE_LINES_START}|${PRESERVE_LINES_END} \\*\\/`, `g`), ``);
 
 /**
  * Asynchronously extract nodes from a string.
