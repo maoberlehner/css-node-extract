@@ -4,6 +4,8 @@ import * as postcss from 'postcss';
 import extractNodeRecursively = require('./extract-node-recursively');
 import filterDefinitions = require('./filter-definitions');
 
+import { PRESERVE_LINES_END, PRESERVE_LINES_START } from '../const';
+
 import { ICustomFilter } from '../interfaces/ICustomFilter';
 import { IFilter } from '../interfaces/IFilter';
 import { IFilterGroup } from '../interfaces/IFilterGroup';
@@ -33,7 +35,7 @@ export = function postcssNodeExtract(
 
           rule.cloneBefore({
             type: `comment`,
-            text: `START preserve lines${'\n'.repeat(ruleLines - 1)}preserve lines END`,
+            text: `${PRESERVE_LINES_START}${'\n'.repeat(ruleLines - 1)}${PRESERVE_LINES_END}`,
             raws: Object.assign(rule.raws, { left: ' ', right: ' ' }),
           });
         }

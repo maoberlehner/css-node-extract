@@ -4,10 +4,18 @@
   "keywords": [
     "CSS"
   ],
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Markus Oberlehner",
   "homepage": "https://github.com/maoberlehner/css-node-extract",
   "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "watch": "npm run clean && tsc -w",
+    "clean": "rimraf dist",
+    "lint": "tslint src/**/*.ts",
+    "test": "jest test/",
+    "prepublishOnly": "npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maoberlehner/css-node-extract"
@@ -17,26 +25,28 @@
   },
   "dependencies": {
     "change-case": "^3.0.1",
-    "postcss": "^6.0.11"
+    "postcss": "^6.0.13"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^3.5.3",
-    "postcss-less": "^1.1.0",
+    "@types/jest": "^21.1.5",
+    "jest": "^21.2.1",
+    "postcss-less": "^1.1.1",
     "postcss-scss": "^1.0.2",
     "rimraf": "^2.6.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "ts-jest": "^21.1.4",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "npm run clean && tsc",
-    "watch": "npm run clean && tsc -w",
-    "clean": "rimraf dist",
-    "lint": "tslint src/**/*.ts",
-    "test:lib": "mocha test/lib/*.test.js",
-    "test:index": "mocha test/index.test.js",
-    "test": "mocha test/*"
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts)$"
   }
 }
