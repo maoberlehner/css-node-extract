@@ -15,7 +15,7 @@ import { IFilterGroup } from '../interfaces/IFilterGroup';
  */
 export = function postcssNodeExtract(
   filterNames: string|string[],
-  customFilters: ICustomFilter[]|undefined,
+  customFilters?: ICustomFilter,
   preserveLines = false,
 ) {
   const filterNamesArray = Array.isArray(filterNames) ? filterNames : [filterNames];
