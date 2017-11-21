@@ -22,7 +22,7 @@ export const processSync = ({
 /**
  * Asynchronously extract nodes from a string.
  */
-export const process = (options: IProcessOptions) => new Promise((resolve) => {
+export const process = (options: IProcessOptions): Promise<string> => new Promise((resolve) => {
   const result = processSync(options);
   resolve(result);
 });

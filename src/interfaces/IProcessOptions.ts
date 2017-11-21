@@ -3,7 +3,7 @@ import { ICustomFilter } from './ICustomFilter';
 export interface IProcessOptions {
   css: string;
   filters: string|string[];
-  customFilters?: ICustomFilter[];
+  customFilters?: ICustomFilter;
   postcssSyntax?: any;
   preserveLines?: boolean;
 }

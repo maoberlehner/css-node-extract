@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as postcssLessSyntax from 'postcss-less';
 import * as postcssScssSyntax from 'postcss-scss';
 
-import cssNodeExtract, { process, processSync } from '../src';
+import cssNodeExtract, { process, processSync } from './';
 
 describe(`cssNodeExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });

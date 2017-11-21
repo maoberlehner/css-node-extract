@@ -1,4 +1,4 @@
-import postcssNodeExtract = require('../../src/lib/postcss-node-extract');
+import postcssNodeExtract = require('./postcss-node-extract');
 
 describe(`postcssNodeExtract()`, () => {
   test(`It should be a function.`, () => {
@@ -6,7 +6,7 @@ describe(`postcssNodeExtract()`, () => {
   });
 
   test(`It should return a postcss plugin named "postcss-node-extract".`, () => {
-    expect(postcssNodeExtract().postcss).toBeDefined();
-    expect(postcssNodeExtract().postcss.postcssPlugin).toBe(`postcss-node-extract`);
+    expect(postcssNodeExtract('foo').postcss).toBeDefined();
+    expect(postcssNodeExtract('foo').postcss.postcssPlugin).toBe(`postcss-node-extract`);
   });
 });
