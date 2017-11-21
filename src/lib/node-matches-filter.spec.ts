@@ -1,4 +1,4 @@
-import nodeMatchesFilter = require('../../src/lib/node-matches-filter');
+import nodeMatchesFilter = require('./node-matches-filter');
 
 describe(`nodeMatchesFilter()`, () => {
   test(`It should be a function.`, () => {

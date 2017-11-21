@@ -1,4 +1,4 @@
-import postcssNodeExtract = require('../../src/lib/postcss-node-extract');
+import postcssNodeExtract = require('./postcss-node-extract');
 
 describe(`postcssNodeExtract()`, () => {
   test(`It should be a function.`, () => {

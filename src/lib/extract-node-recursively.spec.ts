@@ -1,4 +1,4 @@
-import extractNodeRecursively = require('../../src/lib/extract-node-recursively');
+import extractNodeRecursively = require('./extract-node-recursively');
 
 describe(`extractNodeRecursively()`, () => {
   test(`It should be a function.`, () => {
