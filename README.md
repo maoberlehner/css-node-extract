@@ -1,5 +1,6 @@
 # css-node-extract
 [![Build Status](https://travis-ci.org/maoberlehner/css-node-extract.svg?branch=master)](https://travis-ci.org/maoberlehner/css-node-extract)
+[![GitHub stars](https://img.shields.io/github/stars/maoberlehner/css-node-extract.svg?style=social&label=Star)](https://github.com/maoberlehner/css-node-extract)
 
 Extract certain nodes from CSS code.
 
