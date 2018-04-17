@@ -1,16 +1,12 @@
-import * as fs from 'fs';
-import * as postcssLessSyntax from 'postcss-less';
-import * as postcssScssSyntax from 'postcss-scss';
+import fs from 'fs';
+import postcssLessSyntax from 'postcss-less';
+import postcssScssSyntax from 'postcss-scss';
 
-import cssNodeExtract, { process, processSync } from './';
+import { process, processSync } from './';
 
 describe(`cssNodeExtract`, () => {
   const scss = fs.readFileSync(`test/css/test.scss`, { encoding: `utf8` });
   const less = fs.readFileSync(`test/css/test.less`, { encoding: `utf8` });
-
-  test(`It should be an object.`, () => {
-    expect(typeof cssNodeExtract).toBe(`object`);
-  });
 
   describe(`process()`, () => {
     test(`should be a function.`, () => {
@@ -35,7 +31,9 @@ describe(`cssNodeExtract`, () => {
       });
       const filters = `at-rules`;
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filters, postcssSyntax, preserveLines: true })
+      return process({
+        css: scss, filters, postcssSyntax, preserveLines: true,
+      })
         .then((filteredScss) => {
           expect(filteredScss.trim()).toBe(reference.trim());
         });
@@ -139,7 +137,9 @@ describe(`cssNodeExtract`, () => {
         ],
       };
       const postcssSyntax = postcssScssSyntax;
-      return process({ css: scss, filters, customFilters, postcssSyntax })
+      return process({
+        css: scss, filters, customFilters, postcssSyntax,
+      })
         .then((filteredScss) => {
           expect(filteredScss.trim()).toBe(reference.trim());
         });

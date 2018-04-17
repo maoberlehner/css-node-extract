@@ -1,11 +1,7 @@
-import { IFilter } from '../interfaces/IFilter';
-import { IFilterDefinitions } from '../interfaces/IFilterDefinitions';
-import { IFilterGroup } from '../interfaces/IFilterGroup';
-
 /**
  * Filter definitions.
  */
-const filterDefinitions: IFilterDefinitions = {
+export default {
   atRules: [
     [
       { property: `type`, value: `atrule` },
@@ -78,5 +74,3 @@ const filterDefinitions: IFilterDefinitions = {
     ],
   ],
 };
-
-export = filterDefinitions;
