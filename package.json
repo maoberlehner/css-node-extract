@@ -20,7 +20,7 @@
     "coverage": "jest --coverage --maxWorkers=4",
     "coveralls": "npm run coverage && cat coverage/lcov.info | coveralls",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run scripts"
   },
   "dependencies": {
     "change-case": "^3.0.2",
