@@ -1,9 +1,7 @@
-import { IFilter } from '../interfaces/IFilter';
-
 /**
  * Check if a node matches the given filter.
  */
-export = function nodeMatchesFilter(node: any, filter: IFilter) {
+export default function nodeMatchesFilter(node, filter) {
   if (!node[filter.property]) {
     return false;
   } else if (node[filter.property] === filter.value) {
@@ -12,4 +10,4 @@ export = function nodeMatchesFilter(node: any, filter: IFilter) {
     return true;
   }
   return false;
-};
+}
