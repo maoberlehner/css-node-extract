@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "change-case": "^3.0.2",
-    "postcss": "^6.0.21"
+    "postcss": "^8.2.13"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^2.0.0",
